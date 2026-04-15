@@ -1,0 +1,11 @@
+node_modules/
+
+# Nous allons utiliser .env.example
+.env
+
+# Build (pour React)
+dist/
+build/
+
+# Logs
+npm-debug.log*
