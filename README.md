@@ -8,8 +8,7 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 
 
 1. [Initialisation du Projet](#-initialisation-du-projet)
-2. [Suivi du Travail](#-suivi-du-travail)
-
+2. [Suivi du travail](#-suivi-du-travail)
 ---
 ## Initialisation du Projet
 - `cd front`
@@ -18,7 +17,7 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 - `npm init -y`
 - `cd ..`
 ---
-## Suivi du Travail
+## Suivi du travail
 
 ### Jalon 1
 | Membre du groupe | Tâches réalisées | Tickets (Issues) |
