@@ -20,7 +20,7 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 ## Suivi du travail
 
 ### Jalon 1
-| Membre du groupe | Tâches réalisées                                                                                                                           | Tickets (Issues) |
-|:-----------------|:-------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
-| **Léo**          | Initialisation du projet avec git et trello, recherche de technologies, modélisation de la base de données (MCD/MLD)                       | #1 #5 #2         |               
-| **Nessim**       | Initialisation du projet avec git et trello, recherche de technologies, création de l'API Rest                                             | #1 #5 #6         |     
+| Membre du groupe | Tâches réalisées                                                                                                                               | Tickets (Issues) |
+|:-----------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
+| **Léo**          | Initialisation du projet avec git et trello, recherche de technologies, modélisation de la base de données (MCD/MLD), page de login responsive | #1 #5 #2 #4      |               
+| **Nessim**       | Initialisation du projet avec git et trello, recherche de technologies, création de l'API Rest                                                 | #1 #5 #6         |     
