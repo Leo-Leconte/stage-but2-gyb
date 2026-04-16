@@ -15,6 +15,8 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 - `npm create vite@latest front -- --template react-ts`
 - `cd ../back`
 - `npm init -y`
+- `npm install`
+- `npm install react-router@6 react-router-dom@6`
 - `cd ..`
 ---
 ## Suivi du travail
