@@ -1,20 +1,37 @@
 import styles from './Login.module.css';
 import { useState } from 'react'
 
+
+
 const Login = ( ) => {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    function UsernameChange(e : any) {
+    const [result, setResult] = useState('');
+
+    function handleUsernameChange(e : any) {
         setUsername(e.target.value);
     }
-    function PasswordChange(e : any) {
+    function handlePasswordChange(e : any) {
         setPassword(e.target.value);
     }
 
+    function handleClickedButton(e : any) {
+        e.preventDefault(); // Le comportement par défaut d'une page html est de recharger la page et d'envoyer les données dans l'URL, donc il faut enlever cela pour gérer nous même le comportement et afficher sur la page le message sans la recharger.
+        setResult(
+            "Le formulaire a bien été soumis ennvoyé avec l'utilisateur suivant : " + username
+        );
+    }
+
+
+
+
+
+
     return (
             <div className={styles.bg}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleClickedButton}>
                 <h2 className={styles.title}>Connectez-vous</h2>
 
                 <label className={styles.label} htmlFor="username">Nom d'utilisateur</label>
@@ -24,7 +41,7 @@ const Login = ( ) => {
                     placeholder="Nom d'utilisateur"
                     id="username"
                     value={username}
-                    onChange={UsernameChange}
+                    onChange={handleUsernameChange}
 
                 />
 
@@ -35,16 +52,16 @@ const Login = ( ) => {
                     placeholder="Mot de passe"
                     id="password"
                     value={password}
-                    onChange={PasswordChange}
+                    onChange={handlePasswordChange}
                 />
 
                 <button className={styles.button} type="submit">
                     Se connecter
                 </button>
             </form>
+                <h3>{result}</h3>
         </div>
     );
 }
-
 
 export default Login;
