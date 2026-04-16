@@ -1,17 +1,22 @@
-// importation des modules
+require('dotenv').config();
+
 const cors = require('cors');
 const express = require('express');
-
+const jwt = require('jsonwebtoken');
+const pool = require("./src/db");
 const app = express();
+const port = process.env.PORT || 3000;
+const loginRoute = require('./route/login.route');
+const authRoute = require('./route/auth.route');
+
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.get('/api/test', (req, res) => res.send('Hello World!'));
+app.use('/api/auth',loginRoute)
 
-const port = process.env.PORT || 3000;
-
-app.get('/api/test', (req, res) => res.status(200).json({ message: 'Bien reçu' })) // permet de tester le serveur
-
-if (require.main === module) { // permet de lancer le serveur afin de differencier qui le lance et de pouvoir lancer le serveur en local et effectuer des test dessus
-    app.listen(port, () => console.log(`Serveur sur ecoute sur le port ${port}`)); // permet de lancer le serveur et d avoir un log par derriere
+if (require.main === module) {
+    app.listen(port, () => console.log(`Serveur sur ecoute sur le port ${port}`));
 }
 
-module.exports = app; // permet de lancer le serveur
+module.exports = app;
