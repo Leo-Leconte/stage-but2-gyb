@@ -1,7 +1,17 @@
 import styles from './Login.module.css';
-// import { useState } from 'react'
+import { useState } from 'react'
 
-const Login = () => {
+const Login = ( ) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    function UsernameChange(e : any) {
+        setUsername(e.target.value);
+    }
+    function PasswordChange(e : any) {
+        setPassword(e.target.value);
+    }
+
     return (
             <div className={styles.bg}>
             <form className={styles.form}>
@@ -13,6 +23,9 @@ const Login = () => {
                     type="text"
                     placeholder="Nom d'utilisateur"
                     id="username"
+                    value={username}
+                    onChange={UsernameChange}
+
                 />
 
                 <label className={styles.label} htmlFor="password">Mot de passe</label>
@@ -21,6 +34,8 @@ const Login = () => {
                     type="password"
                     placeholder="Mot de passe"
                     id="password"
+                    value={password}
+                    onChange={PasswordChange}
                 />
 
                 <button className={styles.button} type="submit">
@@ -30,5 +45,6 @@ const Login = () => {
         </div>
     );
 }
+
 
 export default Login;
