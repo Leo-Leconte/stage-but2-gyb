@@ -2,12 +2,9 @@ require('dotenv').config();
 
 const cors = require('cors');
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const pool = require("./src/db");
 const app = express();
 const port = process.env.PORT || 3000;
 const loginRoute = require('./route/login.route');
-const authRoute = require('./route/auth.route');
 
 app.use(cors());
 app.use(express.json());
