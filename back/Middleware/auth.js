@@ -10,7 +10,7 @@ function verifyJwt(token) {
 function requireAuth(req, res, next) {
     const authHeader = req.headers.authorization;
 
-    if(!authHeader?.startsWith("Bearer")) return res.status(401).json({ message: "Token invalide" });
+    if(!authHeader?.startsWith("Bearer")) return res.status(401).json({ message: "Token invalide" }); 
 
     const token = authHeader.split(" ")[1];
 

@@ -10,3 +10,6 @@ build/
 .idea
 # Logs
 npm-debug.log*
+
+# Webstorm
+.idea
