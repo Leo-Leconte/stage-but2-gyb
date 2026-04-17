@@ -15,6 +15,8 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 - `npm create vite@latest front -- --template react-ts`
 - `cd ../back`
 - `npm init -y`
+- `npm install`
+- `npm install react-router@6 react-router-dom@6`
 - `cd ..`
 ---
 ## Suivi du travail
@@ -23,4 +25,4 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 | Membre du groupe | Tâches réalisées                                                                                                                               | Tickets (Issues) |
 |:-----------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
 | **Léo**          | Initialisation du projet avec git et trello, recherche de technologies, modélisation de la base de données (MCD/MLD), page de login responsive | #1 #5 #2 #4      |               
-| **Nessim**       | Initialisation du projet avec git et trello, recherche de technologies, création de l'API Rest                                                 | #1 #5 #6         |     
+| **Nessim**       | Initialisation du projet avec git et trello, recherche de technologies, création de l'API Rest                                                 | #1 #5 #6 #12     |     

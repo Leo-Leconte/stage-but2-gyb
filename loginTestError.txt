@@ -1,0 +1,45 @@
+import styles from './Login.module.css';
+
+import { useState } from 'react'
+
+function login() {
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [usernameError, setUsernameError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+
+    const onButtonClick = () =>{
+        setUsernameError('')
+        setPasswordError    ('')
+
+        if (username===''){
+            setUsernameError("Veuillez entrer votre nom d'utilisateur")
+            return
+        }
+        if (password===''){
+            setPasswordError("Veuillez entrer votre mot de passe")
+        }
+
+        return(
+            <div className="login-box">
+                <input
+                    value={username}
+                    placeholder="Nom d'utilisateur'"
+                    onChange={event=>setUsername(event.target.value)}
+                    className={'user-box'}
+            </div>
+
+
+
+        )
+
+
+
+    }
+
+
+
+
+
+}
