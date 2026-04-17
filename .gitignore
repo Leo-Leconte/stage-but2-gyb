@@ -2,6 +2,7 @@ node_modules/
 
 # Nous allons utiliser .env.example
 .env
+GYB.sql
 
 # Build (pour React)
 dist/
