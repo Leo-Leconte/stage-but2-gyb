@@ -1,5 +1,6 @@
 import styles from './Login.module.css';
 import { useState } from 'react'
+import { useNavigate } from "react-router";
 import logoGyb from "../../assets/Logo-GYB-1.png";
 
 const Login = ( ) => {
@@ -7,6 +8,7 @@ const Login = ( ) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    let navigate = useNavigate();
 
     function handleUsernameChange(e : any) {
         setUsername(e.target.value);
@@ -27,7 +29,8 @@ const Login = ( ) => {
                 });
                 const content = await reponseApi.json();
                 console.log(content);
-            reponseApi.ok ? localStorage.setItem("token" ,content.token) : setError(content.message)
+            reponseApi.ok ? localStorage.setItem("token" ,content.token) : setError(content.message);
+            reponseApi.ok && navigate('http://localhost:5173/redirected');
 
 
         }
