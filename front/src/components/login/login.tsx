@@ -17,17 +17,17 @@ const Login = ( ) => {
         async function handleClickedButton(e : any) {
             e.preventDefault(); // Le comportement par défaut d'une page html est de recharger la page et d'envoyer les données dans l'URL, donc il faut enlever cela pour gérer nous même le comportement et afficher sur la page le message sans la recharger.
 
-            let reponseApi = await fetch("http://127.0.0.1:3000/api/auth/login/post", {
+            let reponseApi = await fetch("http://127.0.0.1:3000/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({username:username, password:password})
+                body: JSON.stringify({nom:username, mot_de_passe:password})
                 });
                 const content = await reponseApi.json();
                 console.log(content);
-            reponseApi.ok ? stocker le token : setError(content)
+            reponseApi.ok ? localStorage.setItem("token" ,content.token) : setError(content.message)
 
 
         }
