@@ -3,19 +3,43 @@ import { useState } from 'react'
 import { useNavigate } from "react-router";
 import logoGyb from "../../assets/Logo-GYB-1.png";
 
+/**
+ * Composant de la page de connexion
+ * Permet à un collaborateur de se login via username et password
+ */
+
 const Login = ( ) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    let navigate = useNavigate();
 
+    const navigate = useNavigate();
+
+    /**
+     * Fonction qui récupère l'username tapé en front et qui l'assigne dans username
+     * @param e ; la valeur du champ username à changer
+     */
     function handleUsernameChange(e : any) {
         setUsername(e.target.value);
     }
+
+    /**
+     * Fonction qui récupère le password tapé en front et qui l'assigne dans password
+     * @param e ; la valeur du champ password à changer
+     */
     function handlePasswordChange(e : any) {
         setPassword(e.target.value);
     }
+
+    /**
+     * Fonction qui regarde si les identifiants sont corrects
+     * Qui stocke dans un localstorage le token renvoyé par l'API
+     * Et redirige vers une page redirected si c'est correct
+     * @param e pour enlever le comportement de la page par défaut
+     * @throws Affiche un message d'erreur si les identifiants sont incorrects
+     *
+     */
         async function handleClickedButton(e : any) {
             e.preventDefault(); // Le comportement par défaut d'une page html est de recharger la page et d'envoyer les données dans l'URL, donc il faut enlever cela pour gérer nous même le comportement et afficher sur la page le message sans la recharger.
 
