@@ -6,7 +6,7 @@ node_modules/
 # Build (pour React)
 dist/
 build/
-
+.idea
 # Logs
 npm-debug.log*
 
