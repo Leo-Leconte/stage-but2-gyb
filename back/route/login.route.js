@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
             data: {
                 Token: token,
                 "type du token": "bearer",
-                "Expire dans": 3600,
+                "Expire dans (sec)": 3600 ,
                 nom_utilisateur: collaborateur.nom
             },
             message: "Connexion établie avec succès"
