@@ -29,10 +29,14 @@ const Login = ( ) => {
                 });
                 const content = await reponseApi.json();
                 console.log(content);
-            reponseApi.ok ? localStorage.setItem("token" ,content.token) : setError(content.message);
-            reponseApi.ok && navigate('http://localhost:5173/redirected');
 
-
+            if(reponseApi.ok){
+                localStorage.setItem("token", content.token);
+                navigate('/redirected');
+            }
+            else{
+                setError(content.message);
+            }
         }
 
     return (
