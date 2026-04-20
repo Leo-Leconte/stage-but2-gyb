@@ -3,10 +3,21 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = require ('express').Router();
 
+
+/**
+ * Permet la connexion d'un collaborateur'
+ *
+ * @name Post
+ * @path {POST} /login
+ * @code {200} succès
+ * @response {string} connexion établie
+ */
+
 router.post("/login", async (req, res) => {
     const { nom, mot_de_passe } = req.body || {};
 
-    if (!nom|| !mot_de_passe) { // si le nom ou le mot de passe n'est pas fourni , alors un msg d erreur apparait
+    // si un des champs est vide
+    if (!nom|| !mot_de_passe) {
         return res.status(400).json({
             "success": false,
             "message": "Champ texte requis."
@@ -25,7 +36,7 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ message: "Collaborateur inconnu." });
         }
 
-        const ok = await bcrypt.compare(mot_de_passe, collaborateur.mot_de_passe); // requete sql pour verifier si le mot de passe est correct tout en le gardant crypte
+        const ok = await bcrypt.compare(mot_de_passe, collaborateur.mot_de_passe); // Verification du mot de passe tout en le gardant crypte
 
         if (!ok) {
             return res.status(401).json({ message: "Nom ou Mot de passe incorrect." }); // toujours dire que le nom ou le mot de passe est incorrect pour éviter les attaques par brute force
