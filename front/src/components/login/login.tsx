@@ -5,23 +5,23 @@ import logoGyb from "../../assets/Logo-GYB-1.png";
 
 /**
  * Composant de la page de connexion
- * Permet à un collaborateur de se login via username et password
+ * Permet à un collaborateur de se login via email et password
  */
 
 const Login = ( ) => {
 
-    const [username, setUsername] = useState('');
+    const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
 
     /**
-     * Fonction qui récupère l'username tapé en front et qui l'assigne dans username
-     * @param e ; la valeur du champ username à changer
+     * Fonction qui récupère l'email tapé en front et qui l'assigne dans email
+     * @param e ; la valeur du champ email à changer
      */
     function handleUsernameChange(e : any) {
-        setUsername(e.target.value);
+        setemail(e.target.value);
     }
 
     /**
@@ -49,7 +49,7 @@ const Login = ( ) => {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({nom:username, mot_de_passe:password})
+                body: JSON.stringify({email:email, mot_de_passe:password})
                 });
                 const content = await reponseApi.json();
                 console.log(content);
@@ -70,13 +70,13 @@ const Login = ( ) => {
                     <form className={styles.form} onSubmit={handleClickedButton}>
                         <h2 className={styles.title}>Connectez-vous</h2>
 
-                        <label className={styles.label} htmlFor="username">Nom d'utilisateur</label>
+                        <label className={styles.label} htmlFor="email">Nom d'utilisateur</label>
                         <input
                             className={styles.input}
                             type="text"
                             placeholder="Nom d'utilisateur"
-                            id="username"
-                            value={username}
+                            id="email"
+                            value={email}
                             onChange={handleUsernameChange}
 
                         />
