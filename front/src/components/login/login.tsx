@@ -96,7 +96,7 @@ const Login = ( ) => {
                             Se connecter
                         </button>
                     </form>
-                    <h3>{error}</h3>
+                    <h3 className={styles.error}>{error}</h3>
                 </div>
             </div>
     );
