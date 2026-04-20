@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const blacklist = require("../src/Store/Blacklist");
 require("dotenv").config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -21,8 +22,12 @@ function requireAuth(req, res, next) {
         return res.status(401).json({ message: "Mettez votre token " });
     }
 
-    // si le token est fourni, mais invalide ou qu'il soit expirer
+    // Si le token est dans la blacklist
+    if (blacklist.has(token))
+        return res.status(401).json({ message: "Token dans la blacklist, reconnectez-vous" });
 
+
+    // si le token est fourni, mais invalide ou qu'il soit expirer
     try{
         req.user = verifyJwt(token);
         return next();

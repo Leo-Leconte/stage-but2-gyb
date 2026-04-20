@@ -6,13 +6,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 const loginRoute = require('./route/login.route');
 const authRoute = require('./route/auth.route');
-const logoutRoute = require('./route/logout.route');
+const logoutRoute = require('./route/auth.route');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth',loginRoute); // route pour la connexion
-app.use('/api/auth',authRoute); // route pour le auth
+app.use('/api/auth',authRoute); // route pour la verification du token
 app.use('/api/auth',logoutRoute);// route pour la déconnexion
 
 // si le main est le module courant alors, on lance le serveur
