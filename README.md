@@ -18,6 +18,7 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 - `npm install`
 - `npm install react-router@6 react-router-dom@6`
 - `cd ..`
+- `npm install --save-dev @testing-library/react @testing-library/dom @types/react @types/react-dom` (pour les tests react)
 ---
 ## Suivi du travail
 
