@@ -14,10 +14,10 @@ const router = require ('express').Router();
  */
 
 router.post("/login", async (req, res) => {
-    const { nom, mot_de_passe } = req.body || {};
+    const { email, mot_de_passe } = req.body || {};
 
     // si un des champs est vide
-    if (!nom|| !mot_de_passe) {
+    if (!email|| !mot_de_passe) {
         return res.status(400).json({
             "success": false,
             "message": "Champ texte requis."
@@ -26,8 +26,8 @@ router.post("/login", async (req, res) => {
 
     try {
         const result = await pool.query(
-            "SELECT id_collaborateur, nom, mot_de_passe FROM gyb_stage.collaborateur WHERE nom = $1 LIMIT 1",
-            [nom]
+            "SELECT id_collaborateur, email, mot_de_passe,nom FROM gyb_stage.collaborateur WHERE email = $1 LIMIT 1",
+            [email]
         ); // requete sql pour recuperer le nom et le mot de passe de l'utilisateur
 
         const collaborateur = result.rows[0];
@@ -39,14 +39,14 @@ router.post("/login", async (req, res) => {
         const ok = await bcrypt.compare(mot_de_passe, collaborateur.mot_de_passe); // Verification du mot de passe tout en le gardant crypte
 
         if (!ok) {
-            return res.status(401).json({ message: "Nom ou Mot de passe incorrect." }); // toujours dire que le nom ou le mot de passe est incorrect pour éviter les attaques par brute force
+            return res.status(401).json({ message: "Email ou Mot de passe incorrect." }); // toujours dire que le nom ou le mot de passe est incorrect pour éviter les attaques par brute force
         }
 
         // creation du token
         const token = jwt.sign(
             {
                 id_collaborateur: collaborateur.id_collaborateur,
-                nom: collaborateur.nom
+                email: collaborateur.email,
             },
             process.env.JWT_SECRET,
             { expiresIn: 3600 } // 1 heure
