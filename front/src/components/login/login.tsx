@@ -1,7 +1,7 @@
 import styles from './Login.module.css';
 import { useState } from 'react'
 import { useNavigate } from "react-router";
-import logoGyb from "../../assets/Logo-GYB-1.png";
+import logoGyb from "../../assets/logo-GYB.png";
 
 /**
  * Composant de la page de connexion
@@ -17,7 +17,7 @@ const Login = ( ) => {
     const navigate = useNavigate();
 
     /**
-     * Fonction qui récupère l'email tapé en front et qui l'assigne dans email
+     * Fonction qui récupère l'email tapé en front et qui l'assigne dans l'email
      * @param e ; la valeur du champ email à changer
      */
     function handleUsernameChange(e : any) {
@@ -34,7 +34,7 @@ const Login = ( ) => {
 
     /**
      * Fonction qui regarde si les identifiants sont corrects
-     * Qui stocke dans un localstorage le token renvoyé par l'API
+     * Qui stockent dans un localstorage le token renvoyé par l'API
      * Et redirige vers une page redirected si c'est correct
      * @param e pour enlever le comportement de la page par défaut
      * @throws Affiche un message d'erreur si les identifiants sont incorrects
@@ -67,14 +67,15 @@ const Login = ( ) => {
             <div className={styles.globalStyle}>
                 <div className={styles.bg}>
                     <img src={logoGyb} alt="Logo de GYB" className={styles.logo} />
+                    <h1 className={styles.h1}>Bienvenue sur GYB</h1>
                     <form className={styles.form} onSubmit={handleClickedButton}>
                         <h2 className={styles.title}>Connectez-vous</h2>
 
-                        <label className={styles.label} htmlFor="email">Nom d'utilisateur</label>
+                        <label className={styles.label} htmlFor="email">Email d'utilisateur</label>
                         <input
                             className={styles.input}
                             type="text"
-                            placeholder="Nom d'utilisateur"
+                            placeholder="Email d'utilisateur"
                             id="email"
                             value={email}
                             onChange={handleUsernameChange}
@@ -95,7 +96,7 @@ const Login = ( ) => {
                             Se connecter
                         </button>
                     </form>
-                    <h3>{error}</h3>
+                    <h3 className={styles.error}>{error}</h3>
                 </div>
             </div>
     );
