@@ -33,13 +33,13 @@ router.post("/login", async (req, res) => {
         const collaborateur = result.rows[0];
 
         if (result.rows.length === 0) { // requete sql pour verifier si l'utilisateur existe
-            return res.status(401).json({ message: "Collaborateur inconnu." });
+            return res.status(401).json({ message: "Email ou Mot de passe incorrect" });
         }
 
         const ok = await bcrypt.compare(mot_de_passe, collaborateur.mot_de_passe); // Verification du mot de passe tout en le gardant crypte
 
         if (!ok) {
-            return res.status(401).json({ message: "Email ou Mot de passe incorrect." }); // toujours dire que le nom ou le mot de passe est incorrect pour éviter les attaques par brute force
+            return res.status(401).json({ message: "Email ou Mot de passe incorrect" }); // toujours dire que le nom ou le mot de passe est incorrect pour éviter les attaques par brute force
         }
 
         // creation du token
