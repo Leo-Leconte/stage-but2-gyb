@@ -13,6 +13,8 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 ## Initialisation du Projet
 - `cd front`
 - `npm create vite@latest front -- --template react-ts`
+- `npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom`
+- `npm install -D @testing-library/user-event`
 - `cd ../back`
 - `npm init -y`
 - `npm install`
