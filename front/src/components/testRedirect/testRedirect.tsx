@@ -21,7 +21,7 @@ const Redirect= ( ) => {
 
     return (
         <>
-            <h2>Bravo vous êtes connectés ! Features à venir mais la redirection a fonctionnée donc c'est déjà un bon
+            <h2 className={styles.h1}>Bravo vous êtes connectés ! Features à venir mais la redirection a fonctionnée donc c'est déjà un bon
             début non? </h2>
             <button className={styles.button} onClick={handleClickedButton}>
                 Se déconnecter
