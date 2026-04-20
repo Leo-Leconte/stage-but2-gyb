@@ -1,0 +1,15 @@
+/* index.css ou App.css */
+*, *::before, *::after {
+    font-family: 'Poppins', system-ui, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: white;
+
+}
+
+body {
+    background: #0d0d0d;
+    min-height: 100vh;
+    font-family: 'Poppins', system-ui, sans-serif;
+}
