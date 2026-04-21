@@ -1,6 +1,6 @@
 import {render, screen} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
-import TestRedirect from "../components/testRedirect/TestRedirect.tsx";
+import TestRedirect from "../components/accueil/Accueil.tsx";
 
 describe('Redirect',() => {
     it("Le bouton se déconnecter du formulaire s'affche", () => {

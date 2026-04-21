@@ -70,7 +70,7 @@ const Login = ( ) => {
 
             if(reponseApi.ok){
                 localStorage.setItem("token", content.token);
-                navigate('/redirected');
+                navigate('/accueil');
             }
             else{
                 setError(content.message);
