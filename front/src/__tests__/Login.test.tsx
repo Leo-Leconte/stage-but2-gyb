@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import Login from '../components/login/login.tsx'
+import Login from '../components/login/Login.tsx'
 import userEvent from '@testing-library/user-event'
 
 

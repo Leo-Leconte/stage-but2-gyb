@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 
 import logoGyb from "../../assets/logo-GYB.png";
-import PopUp from "../popUp/popUp.tsx";
+import PopUp from "../popUp/PopUp.tsx";
 
 /**
  * Composant de la page de connexion

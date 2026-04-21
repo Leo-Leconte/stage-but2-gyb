@@ -1,6 +1,6 @@
 import './App.css'
-import Login from '../src/components/login/login.tsx'
-import Redirect from '../src/components/testRedirect/testRedirect.tsx'
+import Login from './components/login/Login.tsx'
+import Redirect from './components/testRedirect/TestRedirect.tsx'
 
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
