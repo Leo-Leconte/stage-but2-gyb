@@ -1,12 +1,22 @@
 import styles from "../login/Login.module.css";
 import { useNavigate } from "react-router";
 
+/**
+ * Composant de la page de redirection
+ * Permet à un collaborateur de se déconnecter
+ * (plus tard de voir le menu principal avec les stages, c'est une page placeholder)
+ */
 
 const Redirect= ( ) => {
 
     const navigate = useNavigate();
 
-
+    /**
+     * Fonction qui déconnecte le collaborateur
+     * Supprime le token stocké avec localStorage
+     * Le renvoie vers la page de login
+     * @param e ; enlève le comportement de la page par défaut
+     */
     async function handleClickedButton(e : any) {
         e.preventDefault(); // Le comportement par défaut d'une page html est de recharger la page et d'envoyer les données dans l'URL, donc il faut enlever cela pour gérer nous même le comportement et afficher sur la page le message sans la recharger.
 
@@ -14,10 +24,6 @@ const Redirect= ( ) => {
         navigate('/');
         alert('Vous avez bien été déconnecté.');
     }
-
-
-
-
 
     return (
         <>
