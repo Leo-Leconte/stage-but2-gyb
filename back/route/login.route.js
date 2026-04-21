@@ -51,20 +51,19 @@ router.post("/login", async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: 3600 } // 1 heure
         );
-
         // reponse au client
         return res.status(200).json({
             success: true,
             data: {
                 Token: token,
                 "type du token": "bearer",
-                "Expire dans (sec)": 3600 ,
+                "Expire dans (sec)": 10 ,
                 nom_utilisateur: collaborateur.nom
             },
             message: "Connexion établie avec succès"
         });
     } catch (err) { // si une erreur survient
-        console.error("erreur sur la connexion", err);
+        console.error("erreur sur la connexion", err); // cote console pour voir l'erreur'
         return res.status(500).json({ message: "Erreur cote serveur" });
     }
 });
