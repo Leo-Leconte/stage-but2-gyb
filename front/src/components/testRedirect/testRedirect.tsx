@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 
 /**
  * Composant de la page de redirection
- * Permet à un collaborateur de se déconnecter
+ * Permet à un collaborateur de se déconnecter et de renvoyer une notif de deconnection
  * (plus tard de voir le menu principal avec les stages, c'est une page placeholder)
  */
 
@@ -21,7 +21,8 @@ const Redirect= ( ) => {
         e.preventDefault(); // Le comportement par défaut d'une page html est de recharger la page et d'envoyer les données dans l'URL, donc il faut enlever cela pour gérer nous même le comportement et afficher sur la page le message sans la recharger.
 
         localStorage.removeItem("token");
-        navigate('/?deconnected=true');
+        localStorage.setItem("deconnected", "true")
+        navigate('/');
     }
 
     return (
