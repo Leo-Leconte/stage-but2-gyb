@@ -36,7 +36,7 @@ const Login = ( ) => {
      * Fonction qui regarde si les identifiants sont corrects
      * Qui stockent dans un localstorage le token renvoyé par l'API
      * Et redirige vers une page redirected si c'est correct
-     * @param e pour enlever le comportement de la page par défaut
+     * @param e ; enlève le comportement de la page par défaut
      * @throws Affiche un message d'erreur si les identifiants sont incorrects
      *
      */
