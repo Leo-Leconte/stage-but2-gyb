@@ -1,7 +1,10 @@
 import styles from './Login.module.css';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
+
 import logoGyb from "../../assets/logo-GYB.png";
+import PopUp from "../popUp/popUp.tsx";
 
 /**
  * Composant de la page de connexion
@@ -13,10 +16,22 @@ const Login = ( ) => {
     const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
 
     const navigate = useNavigate();
 
-    /**
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        if (searchParams.get("deconnected") === "true") {
+            setMessage("Vous avez été déconnecté !")
+            setTimeout(() => setMessage(""), 3000);
+        }
+    }, [])
+
+
+
+        /**
      * Fonction qui récupère l'email tapé en front et qui l'assigne dans l'email
      * @param e ; la valeur du champ email à changer
      */
@@ -98,6 +113,7 @@ const Login = ( ) => {
                     </form>
                     <h3 className={styles.error}>{error}</h3>
                 </div>
+                {message && <PopUp message={message} />}
             </div>
     );
 }
