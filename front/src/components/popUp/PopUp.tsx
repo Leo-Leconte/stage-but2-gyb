@@ -4,6 +4,10 @@ type PopUpProps = {
     message : string;
 }
 
+/**
+ * Composant popUp de notification
+ * @param message ; le message à afficher dans la popUp
+ */
 const PopUp = ({message} : PopUpProps) => {
     return (
 

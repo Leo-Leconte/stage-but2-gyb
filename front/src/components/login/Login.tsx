@@ -1,7 +1,6 @@
 import styles from './Login.module.css';
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
 
 import logoGyb from "../../assets/logo-GYB.png";
 import PopUp from "../popUp/PopUp.tsx";
@@ -20,12 +19,12 @@ const Login = ( ) => {
 
     const navigate = useNavigate();
 
-    const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        if (searchParams.get("deconnected") === "true") {
+        if (localStorage.getItem("deconnected") === "true") {
             setMessage("Vous avez été déconnecté !")
             setTimeout(() => setMessage(""), 3000);
+            localStorage.removeItem("deconnected");
         }
     }, [])
 
