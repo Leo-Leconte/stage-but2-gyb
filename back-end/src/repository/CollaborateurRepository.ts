@@ -3,7 +3,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ schema: 'gyb_stage', name: 'collaborateur' }) // permet d acceder au schema de la bd ici gyb_stage avec le nom de la table collaborateur
 export class Collaborateur {
 
-
   @PrimaryGeneratedColumn({ name: 'id_collaborateur' })
   id_collaborateur: number;
 
