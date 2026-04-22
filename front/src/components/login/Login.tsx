@@ -69,7 +69,7 @@ const Login = ( ) => {
                 console.log(content);
 
             if(reponseApi.ok){
-                localStorage.setItem("token", content.token);
+                localStorage.setItem("access_token", content.access_token);
                 navigate('/home');
             }
             else{
