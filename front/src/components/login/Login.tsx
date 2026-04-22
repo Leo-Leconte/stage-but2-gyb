@@ -70,7 +70,7 @@ const Login = ( ) => {
 
             if(reponseApi.ok){
                 localStorage.setItem("token", content.token);
-                navigate('/accueil');
+                navigate('/home');
             }
             else{
                 setError(content.message);
@@ -93,7 +93,7 @@ const Login = ( ) => {
                             id="email"
                             value={email}
                             onChange={handleUsernameChange}
-
+                            required
                         />
 
                         <label className={styles.label} htmlFor="password">Mot de passe</label>
@@ -104,6 +104,7 @@ const Login = ( ) => {
                             id="password"
                             value={password}
                             onChange={handlePasswordChange}
+                            required
                         />
 
                         <button className={styles.button} type="submit">
