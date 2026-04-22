@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Collaborateur } from './repository/CollaborateurRepository';
-import {AuthModule} from "./module/auth/auth.module";
+import { AuthModule } from './module/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,9 +18,9 @@ import {AuthModule} from "./module/auth/auth.module";
       database: process.env.POSTGRES_DB,
       entities: [Collaborateur],
       synchronize: false,
-      logging: true,
+      logging: false,
     }),
-      AuthModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
