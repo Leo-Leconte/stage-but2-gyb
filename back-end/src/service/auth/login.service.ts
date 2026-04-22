@@ -10,6 +10,7 @@ export class LoginService {
 
     async login(email: string, mot_de_passe: string) {
 
+        // on verifie que les champs sont bien remplis
         if (!email || !mot_de_passe) {
             throw new BadRequestException('Un mot de passe et un email sont requis pour pouvoir vous connecter');
         }
