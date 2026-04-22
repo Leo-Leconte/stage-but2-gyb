@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router";
 
 import logoGyb from "../../assets/logo-GYB.png";
-import PopUp from "../popUp/popUp.tsx";
+import PopUp from "../popUp/PopUp.tsx";
 
 /**
  * Composant de la page de connexion
@@ -69,8 +69,8 @@ const Login = ( ) => {
                 console.log(content);
 
             if(reponseApi.ok){
-                localStorage.setItem("token", content.token);
-                navigate('/redirected');
+                localStorage.setItem("access_token", content.access_token);
+                navigate('/home');
             }
             else{
                 setError(content.message);
@@ -93,7 +93,7 @@ const Login = ( ) => {
                             id="email"
                             value={email}
                             onChange={handleUsernameChange}
-
+                            required
                         />
 
                         <label className={styles.label} htmlFor="password">Mot de passe</label>
@@ -104,6 +104,7 @@ const Login = ( ) => {
                             id="password"
                             value={password}
                             onChange={handlePasswordChange}
+                            required
                         />
 
                         <button className={styles.button} type="submit">

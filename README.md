@@ -25,7 +25,7 @@ stage (ou apprentissage), quand, dans quel service, et de centraliser les docume
 ## Suivi du travail
 
 ### Jalon 1
-| Membre du groupe | Tâches réalisées                                                                                                                               | Tickets (Issues) |
-|:-----------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
-| **Léo**          | Initialisation du projet avec git et trello, recherche de technologies, modélisation de la base de données (MCD/MLD), page de login responsive | #1 #5 #2 #4      |               
-| **Nessim**       | Initialisation du projet avec git et trello, recherche de technologies, création de l'API Rest                                                 | #1 #5 #6 #12     |     
+| Membre du groupe | Tâches réalisées                                                                                                                                                                                                                                                  | Tickets (Issues) |
+|:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
+| **Léo**          | Initialisation du projet avec git et trello, recherche de technologies, modélisation de la base de données (MCD/MLD), page de login responsive, refonte de la DB avec nestJS, amélioration du style de la page de redirection qui sera plus tard celle des stages | #1 #5 #2 #4      |               
+| **Nessim**       | Initialisation du projet avec git et trello, recherche de technologies, création de l'API Rest, refonte de la DB avec nestJS, tâches back end à refaire version nestJS                                                                                            | #1 #5 #6 #12     |     

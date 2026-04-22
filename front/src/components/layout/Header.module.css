@@ -1,0 +1,30 @@
+.logoGyb{
+    width: 5%;
+    margin-top : 10px;
+    margin-bottom : 10px;
+    margin-left:auto;
+    left:93%;
+}
+
+.hamburger{
+    display: block;
+    margin-top: -2px;
+    background-color: transparent;
+    border-radius: 4px;
+
+}
+
+header{
+    display:flex;
+    align-items: center;
+    background: dodgerblue;
+    padding:1rem;
+}
+
+.hamburger span{
+    display: block;
+    width:25px;
+    height:3px;
+    background:white;
+    margin:5px;
+}
