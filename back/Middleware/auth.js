@@ -13,7 +13,7 @@ function verifyJwt(token) {
 function requireAuth(req, res, next) {
     const authHeader = req.headers.authorization;
 
-    if(!authHeader?.startsWith("Bearer ")) return res.status(401).json({ message: "Pas le bon type pour le token" }); // si le token n'est pas valide à cause du type de token
+    if(!authHeader?.startsWith("Bearer")) return res.status(401).json({ message: "Pas le bon type pour le token" }); // si le token n'est pas valide à cause du type de token
 
     const token = authHeader.split(" ")[1];
 
