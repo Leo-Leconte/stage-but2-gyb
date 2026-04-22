@@ -1,6 +1,9 @@
 import styles from "../login/Login.module.css";
 import { useNavigate } from "react-router";
 import Header from "../layout/Header.tsx";
+import Sidebar from "../layout/Sidebar.tsx";
+import {useState} from "react";
+
 
 /**
  * Composant de la page de redirection
@@ -10,6 +13,7 @@ import Header from "../layout/Header.tsx";
 
 const Home= ( ) => {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
 
     /**
      * Fonction qui déconnecte le collaborateur
@@ -27,7 +31,8 @@ const Home= ( ) => {
 
     return (
         <>
-            <Header/>
+            <Header setIsOpen={setIsOpen}/>
+            <Sidebar isOpen={isOpen}/>
             <h2 className={styles.h1}>Bravo vous êtes connectés ! Features à venir mais la redirection a fonctionnée donc c'est déjà un bon
             début non? </h2>
             <button className={styles.button} onClick={handleClickedButton}>
