@@ -1,0 +1,15 @@
+.logoGyb{
+    width: 5%;
+    margin-top : 10px;
+    margin-bottom : 10px;
+    position:absolute;
+    left:93%;
+}
+
+.hamburger{
+    display: block;
+    margin-top: -2px;
+    background-color: white; /* Couleur du hamburger */
+    border-radius: 4px;
+    position: absolute;
+}
