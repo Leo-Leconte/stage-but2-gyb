@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
  * (plus tard de voir le menu principal avec les stages, c'est une page placeholder)
  */
 
-const Redirect= ( ) => {
+const Home= ( ) => {
 
     const navigate = useNavigate();
 
@@ -37,4 +37,4 @@ const Redirect= ( ) => {
 
 }
 
-export default Redirect;
+export default Home;
