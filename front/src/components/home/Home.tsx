@@ -20,7 +20,7 @@ const Home= ( ) => {
     async function handleClickedButton(e : any) {
         e.preventDefault(); // Le comportement par défaut d'une page html est de recharger la page et d'envoyer les données dans l'URL, donc il faut enlever cela pour gérer nous même le comportement et afficher sur la page le message sans la recharger.
 
-        localStorage.removeItem("token");
+        localStorage.removeItem("access_token");
         localStorage.setItem("deconnected", "true");
         navigate('/');
     }
