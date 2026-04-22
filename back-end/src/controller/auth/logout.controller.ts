@@ -7,6 +7,11 @@ export class LogoutController {
 
   @Post('logout')
   async logout(@Headers('authorization') authHeader: string) {
-    return this.logoutService.logout(authHeader);
+    try {
+      return this.logoutService.logout(authHeader);
+    } catch (error) {
+      console.error('Erreur logout:', error);
+      throw error;
+    }
   }
 }
