@@ -10,12 +10,19 @@ export class StageRepositoryCrud {
     private readonly stage: Repository<Stage>,
   ) {}
 
+  /**
+   * Permet de recuperer tous les stages
+   */
   async findAll() {
     return this.stage.find();
   }
 
+  /**
+   * Permet de recuperer un stage par son id
+   * @param id
+   */
   async findById(id: number) {
-    const idStage = this.stage.findOne({ where: { id } });
+    const idStage = await this.stage.findOne({ where: { id } });
 
     if (idStage === null || idStage === undefined) {
       return null;
@@ -23,14 +30,27 @@ export class StageRepositoryCrud {
     return idStage;
   }
 
+  /**
+   * Permet de supprimer un stage par son id
+   * @param id
+   */
   async delete(id: number) {
     return this.stage.delete(id);
   }
 
+  /**
+   * Permet de modifier un stage par son id
+   * @param id
+   * @param stage
+   */
   async update(id: number, stage: Stage) {
     return this.stage.update(id, stage);
   }
 
+  /**
+   * Permet de creer un stage
+   * @param stage
+   */
   async create(stage: Stage) {
     return this.stage.save(stage);
   }
