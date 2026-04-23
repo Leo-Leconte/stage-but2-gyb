@@ -5,30 +5,26 @@ const Sidebar = ({isOpen} : any) => {
   return (
       <>
       {isOpen &&
-      <nav>
-        <ul>
-          <li>
+      <nav className={styles.nav}>
+
+          <div className={styles.accueil}>
             <a href="#rien" title="L'acueil de notre site">
               Accueil
             </a>
-          </li>
-          <li>
-            <a
-                href="#rien"
-                title="Liste des stagiaires (vue liste) avec filtres (service, periode, statut, tuteur)"
-            >
+          </div>
+
+          <div className={styles.liste}>
+            <a href="#rien" title="Liste des stagiaires (vue liste) avec filtres (service, periode, statut, tuteur)">
               Stagiaires
             </a>
-          </li>
-          <li>
-            <a
-                href="#rien"
-                title="Visualisation des stages sur un calendrier interactif (vue mois / semaine)"
-            >
+          </div>
+
+          <div className={styles.calendrier}>
+            <a href="#rien" title="Visualisation des stages sur un calendrier interactif (vue mois / semaine)">
               Calendrier
             </a>
-          </li>
-        </ul>
+          </div>
+
       </nav>}
       </>
   )
