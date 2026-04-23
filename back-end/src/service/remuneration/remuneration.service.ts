@@ -70,6 +70,16 @@ export class RemunerationService {
       throw new NotFoundException(`Remuneration introuvable`);
     }
 
+    if (!remuneration.est_remunere && remuneration.montant_remunere > 0) {
+      throw new BadRequestException(
+        'Un stage non rémunéré ne peut pas avoir un montant',
+      );
+    }
+
+    if (!remuneration.est_remunere) {
+      remuneration.montant_remunere = null;
+    }
+
     await this.remunerationRepositoryCrud.update(id, remuneration);
 
     return {
