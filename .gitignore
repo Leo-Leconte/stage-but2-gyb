@@ -2,10 +2,14 @@ node_modules/
 
 # Nous allons utiliser .env.example
 .env
+GYB.sql
 
 # Build (pour React)
 dist/
 build/
-
+.idea
 # Logs
 npm-debug.log*
+
+# Webstorm
+.idea
