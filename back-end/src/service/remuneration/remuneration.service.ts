@@ -12,10 +12,17 @@ export class RemunerationService {
     private readonly remunerationRepositoryCrud: RemunerationRepositoryCrud,
   ) {}
 
+  /**
+   * Permet de recuperer tous les stages
+   */
   async findAll() {
     return this.remunerationRepositoryCrud.findAll();
   }
 
+  /**
+   * Permet de recuperer un stage par son id
+   * @param id
+   */
   async findById(id: number) {
     const idR = await this.remunerationRepositoryCrud.findById(id);
 
@@ -28,6 +35,10 @@ export class RemunerationService {
     };
   }
 
+  /**
+   * Permet de supprimer un stage par son id
+   * @param id
+   */
   async delete(id: number) {
     const idR = await this.remunerationRepositoryCrud.findById(id);
 
@@ -47,6 +58,11 @@ export class RemunerationService {
     }
   }
 
+  /**
+   * Permet de modifier un stage par son id
+   * @param id
+   * @param remuneration
+   */
   async update(id: number, remuneration: any) {
     const idR = await this.remunerationRepositoryCrud.findById(id);
 
@@ -61,6 +77,10 @@ export class RemunerationService {
     };
   }
 
+  /**
+   * Permet de creer un stage
+   * @param remuneration
+   */
   async create(remuneration: any) {
     if (!remuneration.est_remunere && remuneration.montant_remunere > 0) {
       throw new BadRequestException(
