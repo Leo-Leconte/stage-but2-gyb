@@ -15,27 +15,47 @@ export class StageController {
   constructor(private readonly stageService: StageService) {}
 
   @Get()
-  findAll() {
-    return this.stageService.findAll();
+  async findAll() {
+    try {
+      return await this.stageService.findAll();
+    } catch (error) {
+      console.error('Erreur findAll stage', error);
+    }
   }
 
   @Get(':id')
-  findById(@Param('id', ParseIntPipe) id: number) {
-    return this.stageService.findByid(id);
+  async findById(@Param('id', ParseIntPipe) id: number) {
+    try {
+      return await this.stageService.findByid(id);
+    } catch (error) {
+      console.error('Erreur findById stage', error);
+    }
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return this.stageService.delete(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    try {
+      return await this.stageService.delete(id);
+    } catch (error) {
+      console.error('Erreur delete stage', error);
+    }
   }
 
   @Post('/create')
-  create(@Body() stage: any) {
-    return this.stageService.create(stage);
+  async create(@Body() stage: any) {
+    try {
+      return await this.stageService.create(stage);
+    } catch (error) {
+      console.error('Erreur create stage', error);
+    }
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() stage: any) {
-    return this.stageService.update(id, stage);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() stage: any) {
+    try {
+      return await this.stageService.update(id, stage);
+    } catch (error) {
+      console.error('Erreur update stage', error);
+    }
   }
 }
