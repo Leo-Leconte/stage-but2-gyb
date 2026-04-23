@@ -31,13 +31,14 @@ const Home= ( ) => {
 
     return (
         <>
-            <Header setIsOpen={setIsOpen}/>
+            {/*Je savais pas trop si c'est possible de mettre ça dans le CSS alors je l'ai mis ici*/}
+            <div style={{ marginLeft: isOpen ? '250px' : '0', transition: 'margin 0.3s ease' }}>
+            <Header setIsOpen={setIsOpen} isOpen={isOpen}/>
             <Sidebar isOpen={isOpen}/>
-            <h2 className={styles.h1}>Bravo vous êtes connectés ! Features à venir mais la redirection a fonctionnée donc c'est déjà un bon
-            début non? </h2>
             <button className={styles.button} onClick={handleClickedButton}>
                 Se déconnecter
             </button>
+            </div>
         </>
     )
 
