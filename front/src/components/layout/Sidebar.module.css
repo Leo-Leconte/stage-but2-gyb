@@ -1,0 +1,56 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background: #1e1e2e;
+    padding-top: 5rem;
+    z-index: 999;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+}
+
+.accueil, .liste, .calendrier {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.accueil a, .liste a, .calendrier a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+}
+
+.accueil:hover, .liste:hover, .calendrier:hover {
+    background: rgba(235, 70, 96, 0.2);
+}
+
+.accueil:hover{
+    cursor: pointer;
+}
+
+.liste:hover, .calendrier:hover {
+    cursor:help;
+}
+
+.deconnexion{
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+
+}
+
+.deconnexion:hover{
+    background-color: darkred;
+    cursor: pointer;
+}
+
+.deconnexion button{
+    background: transparent;
+    border:none;
+    cursor:pointer;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+}
