@@ -14,6 +14,9 @@ import { RemunerationService } from '../../service/remuneration/remuneration.ser
 export class RemunerationController {
   constructor(private readonly remunerationService: RemunerationService) {}
 
+  /**
+   * Permet de recuperer tous les stages
+   */
   @Get()
   async findAll() {
     try {
@@ -23,6 +26,10 @@ export class RemunerationController {
     }
   }
 
+  /**
+   * Permet de recuperer un stage par son id
+   * @param id
+   */
   @Get(':id')
   async findById(@Param('id', ParseIntPipe) id: number) {
     try {
@@ -32,6 +39,10 @@ export class RemunerationController {
     }
   }
 
+  /**
+   * Permet de supprimer un stage par son id
+   * @param id
+   */
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     try {
@@ -41,6 +52,10 @@ export class RemunerationController {
     }
   }
 
+  /**
+   * Permet de creer un stage
+   * @param remuneration
+   */
   @Post('/create')
   async create(@Body() remuneration: any) {
     try {
@@ -50,6 +65,11 @@ export class RemunerationController {
     }
   }
 
+  /**
+   * Permet de modifier un stage par son id
+   * @param id
+   * @param remuneration
+   */
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
