@@ -11,36 +11,51 @@ import {
 import { StagiaireService } from '../../service/stagiaire/stagiaire.service';
 
 @Controller('api/stagiaire')
-export class StagiaireController {
-    constructor(private readonly stagiaireService: StagiaireService) {}
+export class StageController {
+    constructor(private readonly StagiaireService: StagiaireService) {}
 
     @Get()
-    findAll() {
-        try{
-            return this.stagiaireService.findAll();
-        }
-        catch(error){
-            console.error("",error);
+    async findAll() {
+        try {
+            return await this.StagiaireService.findAll();
+        } catch (error) {
+            console.error('Erreur findAll stagiaire', error);
         }
     }
 
     @Get(':id')
-    findById(@Param('id', ParseIntPipe) id: number) {
-        return this.stagiaireService.findByid(id);
+    async findById(@Param('id', ParseIntPipe) id: number) {
+        try {
+            return await this.StagiaireService.findByid(id);
+        } catch (error) {
+            console.error('Erreur findById stagiaire', error);
+        }
     }
 
     @Delete(':id')
-    delete(@Param('id', ParseIntPipe) id: number) {
-        return this.stagiaireService.delete(id);
+    async delete(@Param('id', ParseIntPipe) id: number) {
+        try {
+            return await this.StagiaireService.delete(id);
+        } catch (error) {
+            console.error('Erreur delete stagiaire', error);
+        }
     }
 
     @Post('/create')
-    create(@Body() stagiaire: any) {
-        return this.stagiaireService.create(stagiaire);
+    async create(@Body() stagiaire: any) {
+        try {
+            return await this.StagiaireService.create(stagiaire);
+        } catch (error) {
+            console.error('Erreur create stagiaire', error);
+        }
     }
 
     @Put(':id')
-    update(@Param('id', ParseIntPipe) id: number, @Body() stagiaire: any) {
-        return this.stagiaireService.update(id, stagiaire);
+    async update(@Param('id', ParseIntPipe) id: number, @Body() stagiaire: any) {
+        try {
+            return await this.StagiaireService.update(id, stagiaire);
+        } catch (error) {
+            console.error('Erreur update stagiaire', error);
+        }
     }
 }
