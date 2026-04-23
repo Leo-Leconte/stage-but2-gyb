@@ -7,6 +7,8 @@ import { AuthModule } from './module/auth/auth.module';
 import { StageModule } from './module/stage/stage.module';
 import { Remuneration } from './repository/RemunerationRepository';
 import { RemunerationModule } from './module/remuneration/remuneration.module';
+import { StagiaireModule } from './module/stagiaire/stagiaire.module';
+import { Stagiaire } from './repository/StagiaireRepository';
 
 @Module({
   imports: [
@@ -20,12 +22,13 @@ import { RemunerationModule } from './module/remuneration/remuneration.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Collaborateur, Stage, Remuneration],
+      entities: [Collaborateur, Stage, Remuneration,Stagiaire],
       synchronize: false,
       logging: false,
     }),
     AuthModule,
     StageModule,
+    StagiaireModule,
     RemunerationModule,
   ],
 })
