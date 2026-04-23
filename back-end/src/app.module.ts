@@ -3,11 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Collaborateur } from './repository/CollaborateurRepository';
 import { Stage } from './repository/StageRepository';
-import { Stagiaire } from './repository/StagiaireRepository';
-
 import { AuthModule } from './module/auth/auth.module';
 import { StageModule } from './module/stage/stage.module';
+import { Remuneration } from './repository/RemunerationRepository';
+import { RemunerationModule } from './module/remuneration/remuneration.module';
 import { StagiaireModule } from './module/stagiaire/stagiaire.module';
+import { Stagiaire } from './repository/StagiaireRepository';
 
 @Module({
   imports: [
@@ -21,13 +22,14 @@ import { StagiaireModule } from './module/stagiaire/stagiaire.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Collaborateur, Stage, Stagiaire],
+      entities: [Collaborateur, Stage, Remuneration,Stagiaire],
       synchronize: false,
       logging: false,
     }),
     AuthModule,
     StageModule,
-    StagiaireModule
+    StagiaireModule,
+    RemunerationModule,
   ],
 })
 export class AppModule {}
