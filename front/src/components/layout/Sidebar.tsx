@@ -3,6 +3,14 @@ import { useNavigate } from "react-router";
 const Sidebar = ({isOpen} : any) => {
     const navigate = useNavigate();
 
+
+    /**
+     * Fonction qui déconnecte le collaborateur
+     * Supprime le token stocké avec localStorage
+     * Le renvoie vers la page de login
+     * @param e ; enlève le comportement de la page par défaut
+     */
+
     async function handleClickedButton(e : any) {
         e.preventDefault(); // Le comportement par défaut d'une page html est de recharger la page et d'envoyer les données dans l'URL, donc il faut enlever cela pour gérer nous même le comportement et afficher sur la page le message sans la recharger.
 
@@ -11,12 +19,24 @@ const Sidebar = ({isOpen} : any) => {
         navigate('/');
     }
 
+    /**
+     * Fonction qui redirige vers home au clic
+     */
     function handleAccueil(){
         navigate('/home');
     }
+
+    /**
+     * Fonction qui redirige vers stagiaires au clic
+     */
     function handleStagiaires(){
         navigate('/stagiaires');
     }
+
+
+    /**
+     * Fonction qui redirige vers calendrier au clic
+     */
     function handleCalendrier(){
         navigate('/calendrier');
     }
