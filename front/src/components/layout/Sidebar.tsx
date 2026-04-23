@@ -48,7 +48,7 @@ const Sidebar = ({isOpen} : any) => {
       <nav className={styles.nav}>
 
           <div className={styles.accueil}>
-            <a onClick={handleAccueil} title="L'acueil de notre site">
+            <a onClick={handleAccueil} title="L'accueil de notre site">
               Accueil
             </a>
           </div>
