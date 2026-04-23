@@ -26,6 +26,14 @@
     background: rgba(235, 70, 96, 0.2);
 }
 
+.accueil:hover{
+    cursor: pointer;
+}
+
+.liste:hover, .calendrier:hover {
+    cursor:help;
+}
+
 .deconnexion{
     padding: 1rem 1.5rem;
     border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -34,6 +42,7 @@
 
 .deconnexion:hover{
     background-color: darkred;
+    cursor: pointer;
 }
 
 .deconnexion button{
@@ -44,5 +53,4 @@
     text-decoration: none;
     font-size: 1rem;
     display: block;
-
 }
