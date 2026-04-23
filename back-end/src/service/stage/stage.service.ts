@@ -5,10 +5,18 @@ import { StageRepositoryCrud } from 'src/repository/stage/StageRepositoryCrud';
 export class StageService {
   constructor(private readonly stageRepositoryCrud: StageRepositoryCrud) {}
 
+  /**
+   * Permet de recuperer tous les stages
+   */
   async findAll() {
     return this.stageRepositoryCrud.findAll();
   }
 
+  /**
+   * Permet de recuperer un stage par son id
+   * @param id
+   * le if present permet de verifie si le stage existe
+   */
   async findByid(id: number) {
     const idS = await this.stageRepositoryCrud.findById(id);
 
@@ -20,6 +28,12 @@ export class StageService {
       stage: idS,
     };
   }
+
+  /**
+   * Permet de supprimer un stage par son id
+   * @param id
+   * le if present permet de verifie si le stage existe
+   */
 
   async delete(id: number) {
     const idS = await this.stageRepositoryCrud.findById(id);
@@ -35,6 +49,12 @@ export class StageService {
     };
   }
 
+  /**
+   * Permet de modifier un stage par son id
+   * @param id
+   * @param stage
+   * le if present permet de verifie si le stage existe
+   */
   async update(id: number, stage: any) {
     const idS = await this.stageRepositoryCrud.findById(id);
 
@@ -49,6 +69,10 @@ export class StageService {
     };
   }
 
+  /**
+   * Permet de creer un stage
+   * @param stage
+   */
   async create(stage: any) {
     await this.stageRepositoryCrud.create(stage);
 
