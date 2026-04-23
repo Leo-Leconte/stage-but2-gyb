@@ -11,25 +11,36 @@ const Sidebar = ({isOpen} : any) => {
         navigate('/');
     }
 
+    function handleAccueil(){
+        navigate('/home');
+    }
+    function handleStagiaires(){
+        navigate('/stagiaires');
+    }
+    function handleCalendrier(){
+        navigate('/calendrier');
+    }
+
+
   return (
       <>
       {isOpen &&
       <nav className={styles.nav}>
 
           <div className={styles.accueil}>
-            <a href="#rien" title="L'acueil de notre site">
+            <a onClick={handleAccueil} title="L'acueil de notre site">
               Accueil
             </a>
           </div>
 
           <div className={styles.liste}>
-            <a href="#rien" title="Liste des stagiaires (vue liste) avec filtres (service, periode, statut, tuteur)">
+            <a onClick={handleStagiaires} title="Liste des stagiaires (vue liste) avec filtres (service, periode, statut, tuteur)">
               Stagiaires
             </a>
           </div>
 
           <div className={styles.calendrier}>
-            <a href="#rien" title="Visualisation des stages sur un calendrier interactif (vue mois / semaine)">
+            <a onClick={handleCalendrier} title="Visualisation des stages sur un calendrier interactif (vue mois / semaine)">
               Calendrier
             </a>
           </div>
