@@ -4,10 +4,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
+import { BlacklistService } from './blacklist.service';
 
 @Injectable()
 export class LogoutService {
-  private blacklistedTokens: Set<string> = new Set(); // stocke le token pour la blacklist
+  constructor(private readonly blacklistService: BlacklistService) {}
 
   async logout(authHeader: string) {
     if (!authHeader) {
@@ -29,7 +30,7 @@ export class LogoutService {
     }
 
     // Vérifie si le token est déjà blacklisté
-    if (this.blacklistedTokens.has(token)) {
+    if (this.blacklistService.has(token)) {
       throw new UnauthorizedException('Utilisateur déjà déconnecté');
     }
 
@@ -37,7 +38,7 @@ export class LogoutService {
       jwt.verify(token, secret);
 
       // Ajoute le token à la blacklist
-      this.blacklistedTokens.add(token);
+      this.blacklistService.add(token);
 
       return {
         success: true,
