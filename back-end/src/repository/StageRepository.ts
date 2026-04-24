@@ -29,10 +29,10 @@ export class Stage {
   statut: string;
 
   @Column({ type: 'date', name: 'date_debut' })
-  date_debut: string;
+  date_debut: Date;
 
   @Column({ type: 'date', name: 'date_fin' })
-  date_fin: string;
+  date_fin: Date;
 
   @Column({ type: 'int', name: 'id_stagiaire', nullable: true })
   id_stagiaire: number;
