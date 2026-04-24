@@ -9,10 +9,12 @@ import {
   Put,
 } from '@nestjs/common';
 import { StageService } from '../../service/stage/stage.service';
+import {CreateStageDto} from "../../repository/stage/dto/stage.dto";
 
 @Controller('api/stage')
 export class StageController {
-  constructor(private readonly stageService: StageService) {}
+  constructor(private readonly stageService: StageService) {
+  }
 
   @Get()
   async findAll() {
@@ -42,7 +44,7 @@ export class StageController {
   }
 
   @Post('/create')
-  async create(@Body() stage: any) {
+  async create(@Body() stage: CreateStageDto) {
     try {
       return await this.stageService.create(stage);
     } catch (error) {
@@ -51,7 +53,7 @@ export class StageController {
   }
 
   @Put(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() stage: any) {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() stage: CreateStageDto) {
     try {
       return await this.stageService.update(id, stage);
     } catch (error) {
