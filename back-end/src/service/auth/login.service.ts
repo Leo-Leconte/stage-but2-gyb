@@ -46,6 +46,7 @@ export class LoginService {
       {
         id_collaborateur: collaborateur.id_collaborateur,
         email: collaborateur.email,
+        role: 'collaborateur',
       },
       secret,
       { expiresIn: 3600 },
