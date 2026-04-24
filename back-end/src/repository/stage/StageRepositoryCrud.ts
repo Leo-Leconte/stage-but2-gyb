@@ -53,11 +53,14 @@ export class StageRepositoryCrud {
    */
   calcStatut(stage:Stage) {
     const now=new Date();
-    if(stage.date_fin > now && stage.date_debut > now){
+    const dateFin = new Date(stage.date_fin);
+    const dateDebut = new Date(stage.date_debut);
+
+    if(dateFin > now && dateDebut > now){
       stage.statut="a venir";
     }
     else{
-      if(stage.date_fin > now && stage.date_debut <= now){
+      if(dateFin > now && dateDebut <= now){
         stage.statut="en cours";
       }
       else{
