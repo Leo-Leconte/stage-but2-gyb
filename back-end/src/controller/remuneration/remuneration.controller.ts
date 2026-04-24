@@ -7,8 +7,10 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { RemunerationService } from '../../service/remuneration/remuneration.service';
+import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
 
 @Controller('api/remuneration')
 export class RemunerationController {
@@ -18,6 +20,7 @@ export class RemunerationController {
    * Permet de recuperer tous les stages
    */
   @Get()
+  @UseGuards(CollaborateurRoleGuard)
   async findAll() {
     try {
       return await this.remunerationService.findAll();
@@ -31,6 +34,7 @@ export class RemunerationController {
    * @param id
    */
   @Get(':id')
+  @UseGuards(CollaborateurRoleGuard)
   async findById(@Param('id', ParseIntPipe) id: number) {
     try {
       return await this.remunerationService.findById(id);
@@ -44,6 +48,7 @@ export class RemunerationController {
    * @param id
    */
   @Delete(':id')
+  @UseGuards(CollaborateurRoleGuard)
   async delete(@Param('id', ParseIntPipe) id: number) {
     try {
       return await this.remunerationService.delete(id);
@@ -57,6 +62,7 @@ export class RemunerationController {
    * @param remuneration
    */
   @Post('/create')
+  @UseGuards(CollaborateurRoleGuard)
   async create(@Body() remuneration: any) {
     try {
       return await this.remunerationService.create(remuneration);
@@ -71,6 +77,7 @@ export class RemunerationController {
    * @param remuneration
    */
   @Put(':id')
+  @UseGuards(CollaborateurRoleGuard)
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() remuneration: any,

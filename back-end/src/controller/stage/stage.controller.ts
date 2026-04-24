@@ -7,16 +7,19 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { StageService } from '../../service/stage/stage.service';
+import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
 import {CreateStageDto} from "../../repository/stage/dto/stage.dto";
+
 
 @Controller('api/stage')
 export class StageController {
-  constructor(private readonly stageService: StageService) {
-  }
+  constructor(private readonly stageService: StageService) {}
 
   @Get()
+  @UseGuards(CollaborateurRoleGuard)
   async findAll() {
     try {
       return await this.stageService.findAll();
@@ -26,6 +29,7 @@ export class StageController {
   }
 
   @Get(':id')
+  @UseGuards(CollaborateurRoleGuard)
   async findById(@Param('id', ParseIntPipe) id: number) {
     try {
       return await this.stageService.findByid(id);
@@ -35,6 +39,7 @@ export class StageController {
   }
 
   @Delete(':id')
+  @UseGuards(CollaborateurRoleGuard)
   async delete(@Param('id', ParseIntPipe) id: number) {
     try {
       return await this.stageService.delete(id);
@@ -44,6 +49,7 @@ export class StageController {
   }
 
   @Post('/create')
+  @UseGuards(CollaborateurRoleGuard)
   async create(@Body() stage: CreateStageDto) {
     try {
       return await this.stageService.create(stage);
@@ -53,6 +59,7 @@ export class StageController {
   }
 
   @Put(':id')
+  @UseGuards(CollaborateurRoleGuard)
   async update(@Param('id', ParseIntPipe) id: number, @Body() stage: CreateStageDto) {
     try {
       return await this.stageService.update(id, stage);
