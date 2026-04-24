@@ -11,6 +11,8 @@ import {
 } from '@nestjs/common';
 import { StageService } from '../../service/stage/stage.service';
 import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
+import {CreateStageDto} from "../../repository/stage/dto/stage.dto";
+
 
 @Controller('api/stage')
 export class StageController {
@@ -48,7 +50,7 @@ export class StageController {
 
   @Post('/create')
   @UseGuards(CollaborateurRoleGuard)
-  async create(@Body() stage: any) {
+  async create(@Body() stage: CreateStageDto) {
     try {
       return await this.stageService.create(stage);
     } catch (error) {
@@ -58,7 +60,7 @@ export class StageController {
 
   @Put(':id')
   @UseGuards(CollaborateurRoleGuard)
-  async update(@Param('id', ParseIntPipe) id: number, @Body() stage: any) {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() stage: CreateStageDto) {
     try {
       return await this.stageService.update(id, stage);
     } catch (error) {
