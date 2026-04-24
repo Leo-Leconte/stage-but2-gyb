@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { StageRepositoryCrud } from 'src/repository/stage/StageRepositoryCrud';
+import {CreateStageDto} from "../../repository/stage/dto/stage.dto";
 
 @Injectable()
 export class StageService {
@@ -55,7 +56,7 @@ export class StageService {
    * @param stage
    * le if present permet de verifie si le stage existe
    */
-  async update(id: number, stage: any) {
+  async update(id: number, stage: CreateStageDto) {
     const idS = await this.stageRepositoryCrud.findById(id);
 
     if (!idS) {
@@ -73,7 +74,7 @@ export class StageService {
    * Permet de creer un stage
    * @param stage
    */
-  async create(stage: any) {
+  async create(stage: CreateStageDto) {
     await this.stageRepositoryCrud.create(stage);
 
     return {
