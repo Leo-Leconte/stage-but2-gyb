@@ -20,5 +20,6 @@ import { BlacklistService } from '../../service/auth/blacklist.service';
     AuthRepository,
     BlacklistService,
   ],
+  exports: [VerifyService, BlacklistService, AuthRepository],
 })
 export class AuthModule {}
