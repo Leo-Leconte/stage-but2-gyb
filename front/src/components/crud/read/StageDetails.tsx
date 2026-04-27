@@ -1,5 +1,7 @@
 import { useParams } from "react-router";
 import {useEffect, useState} from "react";
+import styles from "./StageDetails.module.css"
+import { useNavigate } from "react-router";
 
 //import {Route} from "react-router-dom";
 
@@ -19,7 +21,8 @@ const StagesProvisoires = () => {
         id_remuneration: number;
     }
 
-    //<Route path="http://localhost:5173/stage/:postId" element=<Post/> />;
+    const navigate = useNavigate();
+
     const [stage, setStage] = useState<StageType | null>(null); // Je l'initialse de type StageType ou null je trouve ça plus pro qu'un any
 
     const { id } = useParams(); // Il faut le même nom que dans App sinon c'est undefined somewhy
@@ -48,19 +51,48 @@ const StagesProvisoires = () => {
 
     return (
         <>
-            <h2>Bienvenue sur la page des détails du stage </h2>
+            <button className={styles.retour} onClick={() => navigate(-1)}>← Retour</button>
 
             {stage && (
 
-                <div>
-                    <div>date de début de stage : {stage.date_debut}</div>
-                    <div>date de fin de stage : {stage.date_fin}</div>
-                    <div>service d'accueil : {stage.service_accueil}</div>
-                    <div>statut : {stage.statut}</div>
-                    <div>id du stagiaire : {stage.id_stagiaire}</div>
-                    <div>id du tuteur : {stage.id_tuteur}</div>
-                    <div>id de rémunération : {stage.id_remuneration}</div>
-                    <p>================</p>
+                <div className={styles.container}>
+                    <div className={styles.card}>
+                        <div className={styles.titre}>{stage?.intitule}</div>
+                        <div className={styles.statut}>{stage?.statut}</div>
+                        <hr className={styles.separateur}/>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Date de début</span>
+                            <span className={styles.valeur}>{stage?.date_debut}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Date de fin</span>
+                            <span className={styles.valeur}>{stage?.date_fin}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Service d'accueil</span>
+                            <span className={styles.valeur}>{stage?.service_accueil}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Description des missions</span>
+                            <span className={styles.valeur}>{stage?.description_missions}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Compétences à développer</span>
+                            <span className={styles.valeur}>{stage?.developpement_competences}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>ID Stagiaire</span>
+                            <span className={styles.valeur}>{stage?.id_stagiaire}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>ID Tuteur</span>
+                            <span className={styles.valeur}>{stage?.id_tuteur}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>ID Rémunération</span>
+                            <span className={styles.valeur}>{stage?.id_remuneration}</span>
+                        </div>
+                    </div>
                 </div>
             )
             }
