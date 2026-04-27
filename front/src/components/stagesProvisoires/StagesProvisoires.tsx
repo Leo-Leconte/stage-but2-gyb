@@ -60,20 +60,20 @@ const StagesProvisoires = () => {
     return (
         <>
             {message && <PopUp message={message} />}
-            <table>
-                <thead>
-                <tr>
-                    <th>Intitulé</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div className={styles.grille}>
                 {stages.map((stage: any) => (
-                    <tr key={stage.id}>
-                        <td>{stage.intitule}</td>
-                        <td>{stage.statut}</td>
-                        <td>
+                    <div key={stage.id} className={styles.card}>
+                        <div className={styles.cardHeader}>
+                            <h3 className={styles.intitule}>{stage.intitule}</h3>
+                            <span className={styles.statut}>{stage.statut}</span>
+                        </div>
+                        <div className={styles.cardBody}>
+                            <p>{stage.description_missions}</p>
+                            <p><strong>Service :</strong> {stage.service_accueil}</p>
+                            <p><strong>Début :</strong> {stage.date_debut}</p>
+                            <p><strong>Fin :</strong> {stage.date_fin}</p>
+                        </div>
+                        <div className={styles.cardFooter}>
                             <button className={styles.voir} onClick={() => navigate(`/stage/${stage.id}`)}>
                                 Voir en détails
                             </button>
@@ -83,11 +83,10 @@ const StagesProvisoires = () => {
                             <button className={styles.supprimer} onClick={() => deleteStage(stage.id)}>
                                 Supprimer
                             </button>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 ))}
-                </tbody>
-            </table>
+            </div>
         </>
     );
 };

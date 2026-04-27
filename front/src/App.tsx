@@ -6,7 +6,7 @@ import Layout from "./components/layout/Layout.tsx";
 import Stagiaires from "./components/stagiaires/Stagiaires.tsx";
 import Calendrier from "./components/calendrier/Calendrier.tsx";
 import StagesProvisoires from "./components/stagesProvisoires/StagesProvisoires.tsx";
-import StageDetails from "./components/stageDetails/StageDetails.tsx";
+import StageDetails from "./components/crud/read/StageDetails.tsx";
 import CreateNewStagiaires from "./components/crud/create/stagiaires.tsx";
 import CreateNewStage from "./components/crud/create/stage.tsx";
 import CreateRemuneration from "./components/crud/create/remuneration.tsx";
