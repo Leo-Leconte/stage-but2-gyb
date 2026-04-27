@@ -79,6 +79,13 @@
     background: rgba(255, 255, 255, 0.08);
 }
 
+.input[type="radio"]{
+    width: auto;
+    height: auto;
+    margin-left: 8px;
+    accent-color: #f9a03c;
+}
+
 .button{
     width: 100%;
     margin-top: 24px;
