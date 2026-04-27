@@ -36,6 +36,7 @@ const StagesProvisoires = () => {
                 <tr>
                     <th>Intitulé</th>
                     <th>Statut</th>
+                    <th>Description des missions</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -44,6 +45,7 @@ const StagesProvisoires = () => {
                     <tr key={stage.id}>
                         <td>{stage.intitule}</td>
                         <td>{stage.statut}</td>
+                        <td>{stage.description_missions}</td>
                         <td>
                             <button className={styles.voir} onClick={() => navigate(`/stage/${stage.id}`)}>
                                 Voir en détails
