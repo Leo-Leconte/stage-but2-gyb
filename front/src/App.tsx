@@ -6,7 +6,7 @@ import Layout from "./components/layout/Layout.tsx";
 import Stagiaires from "./components/stagiaires/Stagiaires.tsx";
 import Calendrier from "./components/calendrier/Calendrier.tsx";
 import StagesProvisoires from "./components/stagesProvisoires/StagesProvisoires.tsx"
-
+import StageDetails from "./components/stageDetails/StageDetails.tsx"
 
 function App() {
 
@@ -18,7 +18,8 @@ function App() {
                   <Route path="/home" element={<Home/>} />
                   <Route path="/stagiaires" element={<Stagiaires/>} />
                   <Route path="/calendrier" element={<Calendrier/>} />
-                  <Route path="stagesProvisoires" element={<StagesProvisoires/>}/>
+                  <Route path="/stagesProvisoires" element={<StagesProvisoires/>} />
+                  <Route path="/stage/:id" element={<StageDetails/>} />
               </Route>
           </Routes>
       </BrowserRouter>
