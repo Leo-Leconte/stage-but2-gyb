@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import styles from "./create.module.css";
+import { useParams } from "react-router";
+import styles from "./update.module.css";
 
-function CreateRemuneration() {
+function UpdateRemuneration() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     est_remunere: "",
     montant_remunere: "",
   });
 
+  const { id } = useParams();
   const [errors, setErrors] = useState({ err: "" });
   const [success, setSuccess] = useState({ succes: "" });
 
@@ -19,7 +21,7 @@ function CreateRemuneration() {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    // un stagiaire n'est pas forcément remunere alors, on vérifie le montant de la remuneration soit 0, mais s'il y a un montant > 0 alors qu'on la mit à false mettre message d'erreur
+
     if (form.est_remunere === "false" && form.montant_remunere !== "0") {
       setErrors({
         err: "Le stagiaire n'est pas remunere",
@@ -27,31 +29,26 @@ function CreateRemuneration() {
       return;
     }
 
-    // s'il met vrai, mais n'a pas rempli le montant de la remuneration alors, on affiche un message d'erreur et on ne peut pas enregistrer
     if (form.est_remunere === "true" && form.montant_remunere === "0") {
       setErrors({
         err: "Le stagiaire est rémunéré, veuillez remplir le montant de la rémunération",
       });
-      return;
     }
 
-    // s'il met vrai et n'a pas rempli le montant alors, on affiche un message d'erreur
-    if (form.est_remunere == "true" && form.montant_remunere === "") {
-      setErrors({
-        err: "Il faut remplir le montant de la rémuneration",
-      });
-      return;
-    }
-
+    // permet d'envoyer seulement les donnes qui sont remplies et éviter d'envoyer des champs vides et donc de garder les anciennes informations
+    const dataToSend = Object.fromEntries(
+      // transforme les donnes en objet
+      Object.entries(form).filter(([_, value]) => value !== ""), // fait entre les donnes, puis on filtre et on donne au back les donnes qui sont remplies
+    );
     const response = await fetch(
-      "http://localhost:3000/api/remuneration/create",
+      `http://127.0.0.1:3000/api/remuneration/${id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(dataToSend),
       },
     );
     const reussit = await response.json();
@@ -66,7 +63,7 @@ function CreateRemuneration() {
   return (
     <div className={styles.globalStyle}>
       <div className={styles.bg}>
-        <h2 className={styles.title}>Créer une rémunération</h2>
+        <h2 className={styles.title}>Modifier la rémunération</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label}>
             Est rémunéré :
@@ -92,22 +89,24 @@ function CreateRemuneration() {
           <label className={styles.label}>
             Montant de la rémunération :
             <input
-              className={styles.input}
               type="number"
               name="montant_remunere"
-              placeholder={"Montant de la rémunération"}
+              placeholder="Montant de la rémunération"
               value={form.montant_remunere}
+              className={styles.input}
               onChange={handleChange}
             />
           </label>
-          <button className={styles.button} type="submit">
-            Ajouter
+          <button type="submit" className={styles.button}>
+            Modifier
           </button>
-          {errors.err && <p className={styles.error}>{errors.err}</p>}
-          {success.succes && <p className={styles.success}>{success.succes}</p>}
         </form>
+        {errors.err && <div className={styles.error}>{errors.err}</div>}
+        {success.succes && (
+          <div className={styles.success}>{success.succes}</div>
+        )}
       </div>
     </div>
   );
 }
-export default CreateRemuneration;
+export default UpdateRemuneration;
