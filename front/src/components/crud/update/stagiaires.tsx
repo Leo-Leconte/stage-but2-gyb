@@ -45,7 +45,8 @@ function UpdateStagiaires() {
 
     // permet d'envoyer seulement les donnes qui sont remplies et éviter d'envoyer des champs vides et donc de garder les anciennes informations
     const dataToSend = Object.fromEntries(
-      Object.entries(form).filter(([_, value]) => value !== ""),
+      // transforme les donnes en objet
+      Object.entries(form).filter(([_, value]) => value !== ""), // fait entre les donnes, puis on filtre et on donne au back les donnes qui sont remplies
     );
 
     const response = await fetch(`http://127.0.0.1:3000/api/stagiaire/${id}`, {
