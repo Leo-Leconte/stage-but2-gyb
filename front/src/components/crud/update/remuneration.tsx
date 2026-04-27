@@ -73,6 +73,7 @@ function UpdateRemuneration() {
               value="true"
               checked={form.est_remunere === "true"}
               onChange={handleChange}
+              className={styles.input}
             />{" "}
             Oui
             <input
@@ -81,6 +82,7 @@ function UpdateRemuneration() {
               value="false"
               checked={form.est_remunere === "false"}
               onChange={handleChange}
+              className={styles.input}
             />{" "}
             Non
           </label>
