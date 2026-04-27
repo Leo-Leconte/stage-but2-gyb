@@ -60,7 +60,6 @@ const StagesProvisoires = () => {
                     <div>id du stagiaire : {stage.id_stagiaire}</div>
                     <div>id du tuteur : {stage.id_tuteur}</div>
                     <div>id de rémunération : {stage.id_remuneration}</div>
-                    <p>================</p>
                 </div>
             )
             }
