@@ -6,6 +6,8 @@ import Layout from "./components/layout/Layout.tsx";
 import Stagiaires from "./components/stagiaires/Stagiaires.tsx";
 import Calendrier from "./components/calendrier/Calendrier.tsx";
 import CreateNewStagiaires from "./components/crud/create/stagiaires.tsx";
+import CreateNewStage from "./components/crud/create/stage.tsx";
+import CreateRemuneration from "./components/crud/create/remuneration.tsx";
 
 function App() {
   return (
@@ -15,6 +17,11 @@ function App() {
         <Route
           path={"/crud/create/stagiaires"}
           element={<CreateNewStagiaires />}
+        />
+        <Route path={"/crud/create/stage"} element={<CreateNewStage />} />
+        <Route
+          path={"/crud/create/remuneration"}
+          element={<CreateRemuneration />}
         />
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />

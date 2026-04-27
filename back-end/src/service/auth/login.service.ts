@@ -49,7 +49,7 @@ export class LoginService {
         role: 'collaborateur',
       },
       secret,
-      { expiresIn: 3600 },
+      { expiresIn: 10800 },
     );
 
     // on retourne le token
