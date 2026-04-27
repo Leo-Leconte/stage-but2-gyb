@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import {useNavigate} from "react-router";
 import styles from './StagesProvisoires.module.css'
+import PopUp from "../popUp/PopUp.tsx";
 
 type StageType = {
     id: number;
@@ -19,6 +20,7 @@ type StageType = {
 const StagesProvisoires = () => {
 
     const [stages,setStages] = useState<StageType[]>([]);
+    const [message,setMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -41,24 +43,41 @@ const StagesProvisoires = () => {
         fetching();
     },[])
 
+    useEffect(() => {
+        if (localStorage.getItem("deleted") === "true") {
+            setMessage("Le stage a bien été supprimé")
+            setTimeout(() => setMessage(""), 3000);
+            localStorage.removeItem("deleted");
+        }
+    }, [])
+
     async function deleteStage(id:number){
-        const token=localStorage.getItem("access_token");
-        let reponseApi = await fetch(`http://127.0.0.1:3000/api/stage/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
-        const content = await reponseApi.json();
-        setStages(stages.filter((s) => s.id !== id));
-        console.log(content);
-        navigate(`/stagesProvisoires`);
+        const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce stage ?");
+        if(!confirmation) return;
+        else{
+            const token=localStorage.getItem("access_token");
+            let reponseApi = await fetch(`http://127.0.0.1:3000/api/stage/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            const content = await reponseApi.json();
+            setStages(stages.filter((s) => s.id !== id));
+            console.log(content);
+            setMessage("Le stage a bien été supprimé");
+            setTimeout(() => setMessage(""), 3000);
+        }
+
     }
 
 
+
         return(
+            <>
+            {message && <PopUp message={message} />}
             <table>
                 <thead>
                 <tr>
@@ -84,7 +103,9 @@ const StagesProvisoires = () => {
                 ))}
                 </tbody>
             </table>
-            );
+            </>
+
+);
 
 
 };
