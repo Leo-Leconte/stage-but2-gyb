@@ -10,19 +10,19 @@
     box-shadow: 4px 0 15px rgba(0,0,0,0.3);
 }
 
-.accueil, .liste, .calendrier {
+.accueil, .liste, .calendrier, .stages {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.accueil a, .liste a, .calendrier a {
+.accueil a, .liste a, .calendrier a, .stages a {
     color: white;
     text-decoration: none;
     font-size: 1rem;
     display: block;
 }
 
-.accueil:hover, .liste:hover, .calendrier:hover {
+.accueil:hover, .liste:hover, .calendrier:hover, .stages:hover {
     background: rgba(235, 70, 96, 0.2);
 }
 
@@ -30,7 +30,7 @@
     cursor: pointer;
 }
 
-.liste:hover, .calendrier:hover {
+.liste:hover, .calendrier:hover, .stages:hover {
     cursor:help;
 }
 
