@@ -6,17 +6,23 @@ import styles from "./update.module.css";
 function UpdateStage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
+    // stage
     intitule: "",
     description_missions: "",
     developpement_competences: "",
     date_debut: "",
     date_fin: "",
     service_accueil: "",
-    id_stagiaire: "",
-    id_tuteur: "",
-    id_remuneration: "",
+    // pour le recup faire un fetch des tuteur , puis faire un select pour prendre lequelle on a besoin nom_tuteur: "",
+    //stagiaire
+    nom: "",
+    prenom: "",
+    email: "",
+    telephone: "",
+    // remuneration
+    est_remunere: "",
+    montant_remunere: "",
   });
-
   const { id } = useParams();
   const [errors, setErrors] = useState({ err: "" });
   const [success, setSuccess] = useState({ succes: "" });
@@ -29,6 +35,7 @@ function UpdateStage() {
   async function handleSubmit(e: any) {
     e.preventDefault();
 
+    // TODO faire en sorte de pas mettre les dates obligatoirement quand on modifie un stage
     if (form.date_debut === "" && form.date_fin !== "") {
       setErrors({
         err: "La date de début doit être remplie si la date de fin est remplie",
@@ -41,25 +48,88 @@ function UpdateStage() {
       });
       return;
     }
-    // permet d'envoyer seulement les donnes qui sont remplies et éviter d'envoyer des champs vides et donc de garder les anciennes informations
-    const dataToSend = Object.fromEntries(
-      // transforme les donnes en objet
-      Object.entries(form).filter(([_, value]) => value !== ""), // fait entre les donnes, puis on filtre et on donne au back les donnes qui sont remplies
-    );
-    const response = await fetch(`http://127.0.0.1:3000/api/stage/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-      body: JSON.stringify(dataToSend),
-    });
-    const reussit = await response.json();
-    if (response.ok) {
-      setSuccess({ succes: reussit.message });
-      setTimeout(() => navigate("/stagiaires"), 1500);
-    } else {
-      setErrors({ err: reussit.message });
+    if (form.date_fin <= form.date_debut) {
+      setErrors({
+        err: "La date de fin ne peut pas être inferieure a la date de debut",
+      });
+      return;
+    }
+    // on separe les donnes pour les envoyer en differentes requetes afin de pas avoir de probleme
+    const stageData: any = {};
+    const stagiaireData: any = {};
+    const remunerationData: any = {};
+    // Stage, on recupere les donnes du stage et on les met dans stageData, si le champ est vide on le met pas pour pas ecraser les donnes deja existante
+    if (form.intitule) stageData.intitule = form.intitule;
+    if (form.description_missions)
+      stageData.description_missions = form.description_missions;
+    if (form.developpement_competences)
+      stageData.developpement_competences = form.developpement_competences;
+    if (form.date_debut) stageData.date_debut = form.date_debut;
+    if (form.date_fin) stageData.date_fin = form.date_fin;
+    if (form.service_accueil) stageData.service_accueil = form.service_accueil;
+    // stagiaire, on recupere les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide on le met pas pour pas ecraser les donnes deja existante
+    if (form.nom) stagiaireData.nom = form.nom;
+    if (form.prenom) stagiaireData.prenom = form.prenom;
+    if (form.email) stagiaireData.email = form.email;
+    if (form.telephone) stagiaireData.telephone = form.telephone;
+    // remuneration, on recupere les donnes de la remuneration et on les met dans remunerationData, si le champ est vide on le met pas pour pas ecraser les donnes deja existante
+    if (form.est_remunere)
+      remunerationData.est_remunere = form.est_remunere === "true";
+    if (form.montant_remunere)
+      remunerationData.montant_remunere = parseFloat(form.montant_remunere);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    };
+
+    if (Object.keys(stageData).length > 0) {
+      const response = await fetch(`http://127.0.0.1:3000/api/stage/${id}`, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify(stageData),
+      });
+      const reussit = await response.json();
+      if (response.ok) {
+        setSuccess({ succes: reussit.message });
+        setTimeout(() => navigate("/stagesProvisoires"), 1500);
+      } else {
+        setErrors({ err: reussit.message });
+      }
+    }
+    if (Object.keys(stagiaireData).length > 0) {
+      const response = await fetch(
+        `http://127.0.0.1:3000/api/stagiaire/${id}`,
+        {
+          method: "PUT",
+          headers,
+          body: JSON.stringify(stagiaireData),
+        },
+      );
+      const reussit = await response.json();
+      if (response.ok) {
+        setSuccess({ succes: reussit.message });
+        setTimeout(() => navigate("/stagesProvisoires"), 1500);
+      } else {
+        setErrors({ err: reussit.message });
+      }
+    }
+    if (Object.keys(remunerationData).length > 0) {
+      const response = await fetch(
+        `http://127.0.0.1:3000/api/remuneration/${id}`,
+        {
+          method: "PUT",
+          headers,
+          body: JSON.stringify(remunerationData),
+        },
+      );
+      const reussit = await response.json();
+      if (response.ok) {
+        setSuccess({ succes: reussit.message });
+        setTimeout(() => navigate("/stagesProvisoires"), 1500);
+      } else {
+        setErrors({ err: reussit.message });
+      }
     }
   }
 
@@ -68,6 +138,7 @@ function UpdateStage() {
       <div className={styles.bg}>
         <h2 className={styles.titre}>Modifier un stage</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
+          <h3 className={styles.soustitle}>Informations du stage</h3>
           <label className={styles.label}>Intitule</label>
           <input
             type="text"
@@ -127,34 +198,87 @@ function UpdateStage() {
             className={styles.input}
             onChange={handleChange}
           />
-          <label className={styles.label}>Le stagiaire</label>
-
-          <input
-            type="number"
-            name="id_stagiaire"
-            placeholder="ID du stagiaire"
-            value={form.id_stagiaire}
-            className={styles.input}
-            onChange={handleChange}
-          />
           <label className={styles.label}>Le tuteur</label>
           <input
-            type="number"
-            name="id_tuteur"
-            placeholder="ID du tuteur"
-            value={form.id_tuteur}
+            type="select"
+            name="Nom du tuteur"
+            placeholder="Nom du tuteur"
+            value={form.nom_tuteur}
             className={styles.input}
             onChange={handleChange}
           />
-          <label className={styles.label}>La rémunération</label>
+          <h3 className={styles.soustitle}>Informations du stagiaire</h3>
+
+          <label className={styles.label}>Nom</label>
           <input
-            type="number"
-            name="id_remuneration"
-            placeholder="ID de la rémunération"
-            value={form.id_remuneration}
             className={styles.input}
+            type="text"
+            name="nom"
+            placeholder="Nom"
+            value={form.nom}
+            onChange={handleChange as any}
+          />
+          <label className={styles.label}>Prénom</label>
+          <input
+            className={styles.input}
+            type="text"
+            name="prenom"
+            placeholder="Prénom"
+            value={form.prenom}
             onChange={handleChange}
           />
+          <label className={styles.label}>Email</label>
+          <input
+            className={styles.input}
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+          />
+          <label className={styles.label}>Téléphone</label>
+          <input
+            className={styles.input}
+            type="text"
+            name="telephone"
+            placeholder="Téléphone"
+            value={form.telephone}
+            onChange={handleChange}
+          />
+          <h3 className={styles.soustitle}>Informations de la remuneration</h3>
+
+          <label className={styles.label}>
+            Est rémunéré :
+            <input
+              type="radio"
+              name="est_remunere"
+              value="true"
+              checked={form.est_remunere === "true"}
+              onChange={handleChange}
+              className={styles.input}
+            />{" "}
+            Oui
+            <input
+              type="radio"
+              name="est_remunere"
+              value="false"
+              checked={form.est_remunere === "false"}
+              onChange={handleChange}
+              className={styles.input}
+            />{" "}
+            Non
+          </label>
+          <label className={styles.label}>
+            Montant de la rémunération :
+            <input
+              type="number"
+              name="montant_remunere"
+              placeholder="Montant de la rémunération"
+              value={form.montant_remunere}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          </label>
           <button className={styles.button} type="submit">
             Modifier
           </button>
