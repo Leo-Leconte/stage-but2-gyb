@@ -2,10 +2,23 @@ import { useState, useEffect } from 'react'
 import {useNavigate} from "react-router";
 import styles from './StagesProvisoires.module.css'
 
+type StageType = {
+    id: number;
+    intitule: string;
+    description_missions: string;
+    developpement_competences: string;
+    date_debut: string;
+    date_fin: string;
+    service_accueil: string;
+    statut: string;
+    id_stagiaire: number;
+    id_tuteur: number;
+    id_remuneration: number;
+}
 
 const StagesProvisoires = () => {
 
-    const [stages,setStages] = useState([]);
+    const [stages,setStages] = useState<StageType[]>([]);
 
     const navigate = useNavigate();
 
@@ -28,9 +41,24 @@ const StagesProvisoires = () => {
         fetching();
     },[])
 
+    async function deleteStage(id:number){
+        const token=localStorage.getItem("access_token");
+        let reponseApi = await fetch(`http://127.0.0.1:3000/api/stage/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+        const content = await reponseApi.json();
+        setStages(stages.filter((s) => s.id !== id));
+        console.log(content);
+        navigate(`/stagesProvisoires`);
+    }
 
 
-    return (
+        return(
             <table>
                 <thead>
                 <tr>
@@ -40,6 +68,7 @@ const StagesProvisoires = () => {
                 </tr>
                 </thead>
                 <tbody>
+
                 {stages.map((stage: any) => (
                     <tr key={stage.id}>
                         <td>{stage.intitule}</td>
@@ -49,7 +78,7 @@ const StagesProvisoires = () => {
                                 Voir en détails
                             </button>
                             <button className={styles.modifier}>Modifier</button>
-                            <button className={styles.supprimer}>Supprimer</button>
+                            <button className={styles.supprimer} onClick={ () => deleteStage(stage.id)} >Supprimer</button>
                         </td>
                     </tr>
                 ))}
@@ -57,17 +86,6 @@ const StagesProvisoires = () => {
             </table>
             );
 
-            {/*                        <div>
-                    <div>date de début de stage : {stage.date_debut}</div>
-                    <div>date de fin de stage : {stage.date_fin}</div>
-                    <div>service d'accueil : {stage.service_accueil}</div>
-                    <div>statut : {stage.statut}</div>
-                    <div>id du stagiaire : {stage.id_stagiaire}</div>
-                    <div>id du tuteur : {stage.id_tuteur}</div>
-                    <div>id de rémunération : {stage.id_remuneration}</div>
-                    <p>================</p>
-                        </div>
 
-             */}
 };
 export default StagesProvisoires;
