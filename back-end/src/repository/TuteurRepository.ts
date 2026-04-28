@@ -4,7 +4,7 @@ import { Column, Entity, ForeignKey, PrimaryGeneratedColumn } from 'typeorm';
 export class Tuteur {
 
   @PrimaryGeneratedColumn({name : 'id_tuteur'})
-  id_tuteur: number;
+  id: number;
 
   @Column({ type: 'varchar', length: 100 , name : 'nom'})
   nom: string;
