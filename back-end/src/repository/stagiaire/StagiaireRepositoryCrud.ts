@@ -35,7 +35,7 @@ export class StagiaireRepositoryCrud {
      * @param id ; l'id du stagiaire à voir
      */
     async findById(id: number) {
-        const idStagiaire = this.stagiaire.findOne({ where: { id } });
+        const idStagiaire = await this.stagiaire.findOne({ where: { id } });
         if (idStagiaire === null || idStagiaire === undefined) {
             return null;
         }
