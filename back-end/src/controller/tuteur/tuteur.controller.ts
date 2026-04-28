@@ -9,7 +9,7 @@ import { TuteurService } from '../../service/tuteur/tuteur.service';
 import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
 
 
-@Controller('api/stagiaire')
+@Controller('api/tuteur')
 export class TuteurController {
     constructor(private readonly TuteurService: TuteurService) {
     }
