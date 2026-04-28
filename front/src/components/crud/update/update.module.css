@@ -20,6 +20,14 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 
 }
+.retour {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
 .bg {
     display: flex;
