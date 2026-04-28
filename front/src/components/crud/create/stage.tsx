@@ -289,9 +289,11 @@ function CreateStage() {
           <select
             name="id_tuteur"
             onChange={handleChange}
-            className={styles.input}
+            className={styles.select}
           >
-            <option value="">-- Choisir un tuteur --</option>
+            <option value="" className={styles.select}>
+              -- Choisir un tuteur --
+            </option>
             {tuteurs.map((tuteur) => (
               <option key={tuteur.id_tuteur} value={tuteur.id_tuteur}>
                 {tuteur.nom} {tuteur.prenom}
