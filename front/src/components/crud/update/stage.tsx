@@ -275,9 +275,9 @@ function UpdateStage() {
           <select
             name="id_tuteur"
             onChange={handleChange}
-            className={styles.input}
+            className={styles.select}
           >
-            <option value="" className={styles.input}>
+            <option value="" className={styles.select}>
               -- Choisir un tuteur --
             </option>
             {tuteurs.map((tuteur) => (
