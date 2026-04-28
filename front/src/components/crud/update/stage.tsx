@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import styles from "./update.module.css";
-
+// TODO faire le tuteur , c est a dire mettre une selection des tuteurs dans le formulaire
 function UpdateStage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -13,7 +13,6 @@ function UpdateStage() {
     date_debut: "",
     date_fin: "",
     service_accueil: "",
-    // pour le recup faire un fetch des tuteur , puis faire un select pour prendre lequelle on a besoin nom_tuteur: "",
     //stagiaire
     nom: "",
     prenom: "",
@@ -35,30 +34,36 @@ function UpdateStage() {
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    // TODO faire en sorte de pas mettre les dates obligatoirement quand on modifie un stage
     if (form.date_debut === "" && form.date_fin !== "") {
       setErrors({
-        err: "La date de début doit être remplie si la date de fin est remplie",
+        err: "La date de début doit être remplie si la date de fin est remplie ",
       });
       return;
     }
+
     if (form.date_fin === "" && form.date_debut !== "") {
       setErrors({
         err: "La date de fin doit etre remplie si la date de debut est remplie",
       });
       return;
     }
-    if (form.date_fin <= form.date_debut) {
+
+    if (
+      form.date_debut !== "" &&
+      form.date_fin !== "" &&
+      form.date_fin <= form.date_debut
+    ) {
       setErrors({
-        err: "La date de fin ne peut pas être inferieure a la date de debut",
+        err: "La date de fin ne peut pas etre inferieure a la date de debut",
       });
       return;
     }
-    // on separe les donnes pour les envoyer en differentes requetes afin de pas avoir de probleme
+
+    // on sépare les donnes pour les envoyer en différentes requêtes afin de pas avoir de problème
     const stageData: any = {};
     const stagiaireData: any = {};
     const remunerationData: any = {};
-    // Stage, on recupere les donnes du stage et on les met dans stageData, si le champ est vide on le met pas pour pas ecraser les donnes deja existante
+    // Stage, on récupère les donnes du stage et on les met sans stageData, si le champ est vide on le met pas pour pas écraser les donnes deja existante
     if (form.intitule) stageData.intitule = form.intitule;
     if (form.description_missions)
       stageData.description_missions = form.description_missions;
@@ -67,12 +72,12 @@ function UpdateStage() {
     if (form.date_debut) stageData.date_debut = form.date_debut;
     if (form.date_fin) stageData.date_fin = form.date_fin;
     if (form.service_accueil) stageData.service_accueil = form.service_accueil;
-    // stagiaire, on recupere les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide on le met pas pour pas ecraser les donnes deja existante
+    // stagiaire, on récupère les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
     if (form.nom) stagiaireData.nom = form.nom;
     if (form.prenom) stagiaireData.prenom = form.prenom;
     if (form.email) stagiaireData.email = form.email;
     if (form.telephone) stagiaireData.telephone = form.telephone;
-    // remuneration, on recupere les donnes de la remuneration et on les met dans remunerationData, si le champ est vide on le met pas pour pas ecraser les donnes deja existante
+    // remuneration, on récupère les donnes de la remuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
     if (form.est_remunere)
       remunerationData.est_remunere = form.est_remunere === "true";
     if (form.montant_remunere)
@@ -136,6 +141,9 @@ function UpdateStage() {
   return (
     <div className={styles.globalStyle}>
       <div className={styles.bg}>
+        <button className={styles.retour} onClick={() => navigate(-1)}>
+          ← Retour
+        </button>
         <h2 className={styles.titre}>Modifier un stage</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <h3 className={styles.soustitle}>Informations du stage</h3>
@@ -188,22 +196,12 @@ function UpdateStage() {
             className={styles.input}
             onChange={handleChange}
           />
-          <label className={styles.label}>Service d'accueill</label>
-
+          <label className={styles.label}>Service d'accueille</label>
           <input
             type="text"
             name="service_accueil"
             placeholder="Service d'accueil"
             value={form.service_accueil}
-            className={styles.input}
-            onChange={handleChange}
-          />
-          <label className={styles.label}>Le tuteur</label>
-          <input
-            type="select"
-            name="Nom du tuteur"
-            placeholder="Nom du tuteur"
-            value={form.nom_tuteur}
             className={styles.input}
             onChange={handleChange}
           />
