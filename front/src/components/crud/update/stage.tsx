@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import styles from "./update.module.css";
-// TODO faire le tuteur , c est a dire mettre une selection des tuteurs dans le formulaire
 function UpdateStage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -13,26 +12,88 @@ function UpdateStage() {
     date_debut: "",
     date_fin: "",
     service_accueil: "",
+    id_tuteur: "",
     //stagiaire
     nom: "",
     prenom: "",
     email: "",
     telephone: "",
+
     // remuneration
     est_remunere: "",
     montant_remunere: "",
   });
+
+  // les id pour avoir le stage, stagiaire et remuneration
   const { id } = useParams();
+  const [idStagiaire, setIdStagiaire] = useState<number | null>(null);
+  const [idRemuneration, setIdRemuneration] = useState<number | null>(null);
+  const [tuteurs, setTuteurs] = useState<any[]>([]);
+
+  /**
+   * Permet de voir quelle id est relié au stage qui sera modifié et de recuperer tout les tuteurs pour les afficher dans le select et pouvoir le choisir
+   * Cela permet d eviter de modifier tout les id 1 alors que le stagiaire liee au stage 1 est peut etre le 4 ou 2
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`http://127.0.0.1:3000/api/stage/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      const data = await response.json();
+      setIdRemuneration(data.stage.id_remuneration);
+      setIdStagiaire(data.stage.id_stagiaire);
+    };
+
+    const fetchTuteur = async () => {
+      const response = await fetch("http://127.0.0.1:3000/api/tuteur/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      const data = await response.json();
+      setTuteurs(data);
+    };
+    fetchData();
+    fetchTuteur();
+  }, [id]);
+
   const [errors, setErrors] = useState({ err: "" });
   const [success, setSuccess] = useState({ succes: "" });
 
+  /**
+   * Met a jour les information du stage dynamiquement
+   * @param e
+   */
   function handleChange(e: any) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
+  /**
+   * Permet de verifie que chaque champ et bien valide , que les dates soit coherentes et que chaque donnes renvoi bien sur la bonne table pour pas avoir d erreur PostgresSQL
+   * Les fetch sont séparé pour pas avoir de problème d'envoie de donnes et pour pouvoir gérer les erreurs plus facilement, si une requete echoue, les autres peuvent quand même reussir et on affiche l'erreur de la requete qui a echoué
+   * @param e
+   */
   async function handleSubmit(e: any) {
+    const telRegex = /^[0-9]{10}$/; // permet de verifie si le numero de telephone est de 10 chiffres est surtout contient que des chiffres
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // permet de verifier si l'email est valide'
     e.preventDefault();
+
+    if (telRegex.test(form.telephone) === false && form.telephone !== "") {
+      setErrors({
+        err: "Le numero de telephone doit etre de 10 chiffres",
+      });
+      return;
+    }
+
+    if (emailRegex.test(form.email) === false && form.email !== "") {
+      setErrors({
+        err: "L'email doit etre valide",
+      });
+      return;
+    }
 
     if (form.date_debut === "" && form.date_fin !== "") {
       setErrors({
@@ -63,6 +124,7 @@ function UpdateStage() {
     const stageData: any = {};
     const stagiaireData: any = {};
     const remunerationData: any = {};
+
     // Stage, on récupère les donnes du stage et on les met sans stageData, si le champ est vide on le met pas pour pas écraser les donnes deja existante
     if (form.intitule) stageData.intitule = form.intitule;
     if (form.description_missions)
@@ -72,17 +134,21 @@ function UpdateStage() {
     if (form.date_debut) stageData.date_debut = form.date_debut;
     if (form.date_fin) stageData.date_fin = form.date_fin;
     if (form.service_accueil) stageData.service_accueil = form.service_accueil;
+    if (form.id_tuteur) stageData.id_tuteur = parseInt(form.id_tuteur);
+
     // stagiaire, on récupère les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
     if (form.nom) stagiaireData.nom = form.nom;
     if (form.prenom) stagiaireData.prenom = form.prenom;
     if (form.email) stagiaireData.email = form.email;
     if (form.telephone) stagiaireData.telephone = form.telephone;
+
     // remuneration, on récupère les donnes de la remuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
     if (form.est_remunere)
       remunerationData.est_remunere = form.est_remunere === "true";
     if (form.montant_remunere)
       remunerationData.montant_remunere = parseFloat(form.montant_remunere);
 
+    // On crée une constante header pour éviter la redondance
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -104,7 +170,7 @@ function UpdateStage() {
     }
     if (Object.keys(stagiaireData).length > 0) {
       const response = await fetch(
-        `http://127.0.0.1:3000/api/stagiaire/${id}`,
+        `http://127.0.0.1:3000/api/stagiaire/${idStagiaire}`,
         {
           method: "PUT",
           headers,
@@ -121,7 +187,7 @@ function UpdateStage() {
     }
     if (Object.keys(remunerationData).length > 0) {
       const response = await fetch(
-        `http://127.0.0.1:3000/api/remuneration/${id}`,
+        `http://127.0.0.1:3000/api/remuneration/${idRemuneration}`,
         {
           method: "PUT",
           headers,
@@ -205,6 +271,15 @@ function UpdateStage() {
             className={styles.input}
             onChange={handleChange}
           />
+          <label className={styles.label}>Tuteur</label>
+          <select name="id_tuteur" onChange={handleChange}>
+            <option value="">-- Choisir un tuteur --</option>
+            {tuteurs.map((tuteur) => (
+              <option key={tuteur.id_tuteur} value={tuteur.id_tuteur}>
+                {tuteur.nom} {tuteur.prenom}
+              </option>
+            ))}
+          </select>
           <h3 className={styles.soustitle}>Informations du stagiaire</h3>
 
           <label className={styles.label}>Nom</label>
