@@ -31,8 +31,16 @@ const StagesProvisoires = () => {
         id_stagiaire: number;
         nom: string;
         prenom: string;
+        ecole:string;
+        formation:string;
         email:string;
         telephone: string;
+    }
+
+    type RemunerationType = {
+        id_remuneration: number;
+        est_remunere:boolean;
+        montant_remunere:number;
     }
 
 
@@ -40,6 +48,7 @@ const StagesProvisoires = () => {
     const [stage, setStage] = useState<StageType | null>(null);
     const [tuteur, setTuteur] = useState<TuteurType | null>(null);
     const [stagiaire, setStagiaire] = useState<StagiaireType | null>(null);
+    const [remuneration, setRemuneration] = useState<RemunerationType | null>(null);
 
     const { id } = useParams();
 
@@ -88,13 +97,19 @@ const StagesProvisoires = () => {
                     setStagiaire(contentStagiaire.stagiaire);
                 }
 
+                if (contentStage.stage && contentStage.stage.id_remuneration){
+                    const reponseApiRemuneration = await fetch(`http://127.0.0.1:3000/api/remuneration/${contentStage.stage.id_remuneration}`,{
+                        method: "GET",
+                        headers:{
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
 
-
-
-
-
-
-
+                    });
+                    const contentRemuneration = await reponseApiRemuneration.json();
+                    setRemuneration(contentRemuneration.remuneration);
+                }
 
 
             } catch (err) {
@@ -145,8 +160,8 @@ const StagesProvisoires = () => {
                             <span className={styles.valeur}>{tuteur?.prenom} {tuteur?.nom}</span>
                         </div>
                         <div className={styles.champ}>
-                            <span className={styles.label}>ID Rémunération</span>
-                            <span className={styles.valeur}>{stage.id_remuneration}</span>
+                            <span className={styles.label}>Montant de la rémunération</span>
+                            <span className={styles.valeur}>{remuneration?.montant_remunere}</span>
                         </div>
                     </div>
                 </div>
