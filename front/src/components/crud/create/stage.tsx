@@ -271,7 +271,7 @@ function CreateStage() {
             className={styles.input}
             onChange={handleChange}
           />
-          <label className={styles.label}>Service d'accueille</label>
+          <label className={styles.label}>Service d'accueil</label>
           <input
             type="text"
             name="service_accueil"
@@ -370,7 +370,7 @@ function CreateStage() {
             />
           </label>
           <button className={styles.button} type="submit">
-            Modifier
+            Enregistrer
           </button>
         </form>
         {errors.err && <div className={styles.error}>{errors.err}</div>}

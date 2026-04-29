@@ -265,7 +265,7 @@ function UpdateStage() {
             className={styles.input}
             onChange={handleChange}
           />
-          <label className={styles.label}>Service d'accueille</label>
+          <label className={styles.label}>Service d'accueil</label>
           <input
             type="text"
             name="service_accueil"
