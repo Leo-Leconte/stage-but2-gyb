@@ -1,20 +1,25 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity ({ schema: 'gyb_stage', name: 'stagiaire' })
+@Entity({ schema: 'gyb_stage', name: 'stagiaire' })
 export class Stagiaire {
-
-  @PrimaryGeneratedColumn({name : 'id_stagiaire'})
+  @PrimaryGeneratedColumn({ name: 'id_stagiaire' })
   id: number;
 
-  @Column({ type: 'varchar', length: 100 , name : 'nom'})
+  @Column({ type: 'varchar', length: 100, name: 'nom' })
   nom: string;
 
-  @Column({ type: 'varchar', length: 100 , name : 'prenom'})
+  @Column({ type: 'varchar', length: 100, name: 'prenom' })
   prenom: string;
 
-  @Column({ type: 'varchar', length: 100 , name : 'email'})
+  @Column({ type: 'varchar', length: 100, name: 'email' })
   email: string;
 
-  @Column({ type: 'varchar', length: 15 , name : 'telephone'})
+  @Column({ type: 'varchar', length: 100, name: 'ecole' })
+  ecole: string;
+
+  @Column({ type: 'varchar', length: 100, name: 'formation' })
+  formation: string;
+
+  @Column({ type: 'varchar', length: 15, name: 'telephone' })
   telephone: string;
 }
