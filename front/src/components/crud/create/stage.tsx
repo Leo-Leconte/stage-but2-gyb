@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import styles from "./create.module.css";
-// TODO fix que quand on cree les id remuneration , stagiaire et tuteur sont bien assigne et quand on voit en detail tous les id sont bien affiche
 function CreateStage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -43,11 +42,24 @@ function CreateStage() {
     fetchTuteur();
   }, [id]);
 
+  /**
+   * Met a jour les information du stage dynamiquement
+   * @param e
+   */
   function handleChange(e: any) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
+  /**
+   * @const telRegex 10 chiffres
+   * @const emailRegex valide email (contient un @ et un .)
+   * @param e
+   *
+   * Beaucoup de condition pour verifier si les donnes sont correctes avant d'envoyer les donnes au backend
+   * Une condition que toute les cases soit remplie avant de pouvoir cree un stage
+   * On envoie les donnes au back , chaque table a sa propre route pour que quand on envoie se soit a la bonne table et eviter tout probleme de cle etrangere
+   */
   async function handleSubmit(e: any) {
     const telRegex = /^[0-9]{10}$/; // permet de verifie si le numero de telephone est de 10 chiffres est surtout contient que des chiffres
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // permet de verifier si l'email est valide'
@@ -215,7 +227,7 @@ function CreateStage() {
         setTimeout(() => navigate("/stagesProvisoires"), 1500);
       }
     } catch (error) {
-      setErrors({ err: "Erreur lors de la création complète" });
+      setErrors({ err: "Erreur lors de la création du stage" });
     }
   }
 
@@ -225,10 +237,10 @@ function CreateStage() {
         <button className={styles.retour} onClick={() => navigate(-1)}>
           ← Retour
         </button>
-        <h2 className={styles.titre}>Cree un stage</h2>
+        <h2 className={styles.titre}>Crée un stage</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h3 className={styles.soustitle}>Informations du stage</h3>
-          <label className={styles.label}>Intitule</label>
+          <h3 className={styles.subtitle}>Informations du stage</h3>
+          <label className={styles.label}>Intitulé</label>
           <input
             type="text"
             name="intitule"
@@ -257,7 +269,7 @@ function CreateStage() {
             className={styles.input}
             onChange={handleChange}
           />
-          <label className={styles.label}>Date de debut</label>
+          <label className={styles.label}>Date de début</label>
 
           <input
             type="date"
@@ -303,7 +315,7 @@ function CreateStage() {
               );
             })}
           </select>
-          <h3 className={styles.soustitle}>Informations du stagiaire</h3>
+          <h3 className={styles.subtitle}>Informations du stagiaire</h3>
 
           <label className={styles.label}>Nom</label>
           <input
@@ -359,7 +371,7 @@ function CreateStage() {
             value={form.telephone}
             onChange={handleChange}
           />
-          <h3 className={styles.soustitle}>Informations de la remuneration</h3>
+          <h3 className={styles.subtitle}>Informations de la remuneration</h3>
 
           <label className={styles.label}>
             Est rémunéré :
