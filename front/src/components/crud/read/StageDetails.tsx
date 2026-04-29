@@ -4,6 +4,7 @@ import styles from "./StageDetails.module.css";
 import { useNavigate } from "react-router";
 
 const StagesProvisoires = () => {
+
     type StageType = {
         id: number;
         intitule: string;
@@ -26,9 +27,19 @@ const StagesProvisoires = () => {
         email: string;
     }
 
+    type StagiaireType = {
+        id_stagiaire: number;
+        nom: string;
+        prenom: string;
+        email:string;
+        telephone: string;
+    }
+
+
     const navigate = useNavigate();
     const [stage, setStage] = useState<StageType | null>(null);
     const [tuteur, setTuteur] = useState<TuteurType | null>(null);
+    const [stagiaire, setStagiaire] = useState<StagiaireType | null>(null);
 
     const { id } = useParams();
 
@@ -47,7 +58,6 @@ const StagesProvisoires = () => {
                     }
                 });
                 const contentStage = await reponseApiStage.json();
-
                 setStage(contentStage.stage);
 
 
@@ -61,11 +71,32 @@ const StagesProvisoires = () => {
                         }
                     });
                     const contentTuteur = await reponseApiTuteur.json();
-
-
                     setTuteur(contentTuteur.tuteur);
-
                 }
+
+                if (contentStage.stage && contentStage.stage.id_stagiaire){
+                    const reponseApiStagiaire = await fetch(`http://127.0.0.1:3000/api/stagiaire/${contentStage.stage.id_stagiaire}`,{
+                        method: "GET",
+                        headers:{
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+
+                    });
+                    const contentStagiaire = await reponseApiStagiaire.json();
+                    setStagiaire(contentStagiaire.stagiaire);
+                }
+
+
+
+
+
+
+
+
+
+
             } catch (err) {
                 console.error("Erreur fetching:", err);
             }
@@ -106,8 +137,8 @@ const StagesProvisoires = () => {
                             <span className={styles.valeur}>{stage.developpement_competences}</span>
                         </div>
                         <div className={styles.champ}>
-                            <span className={styles.label}>ID Stagiaire</span>
-                            <span className={styles.valeur}>{stage.id_stagiaire}</span>
+                            <span className={styles.label}>Stagiaire</span>
+                            <span className={styles.valeur}>{stagiaire?.nom} {stagiaire?.prenom}</span>
                         </div>
                         <div className={styles.champ}>
                             <span className={styles.label}>Tuteur</span>
