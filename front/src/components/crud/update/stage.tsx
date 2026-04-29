@@ -16,6 +16,8 @@ function UpdateStage() {
     nom: "",
     prenom: "",
     email: "",
+    ecole: "",
+    formation: "",
     telephone: "",
 
     // remuneration
@@ -139,6 +141,8 @@ function UpdateStage() {
     if (form.nom) stagiaireData.nom = form.nom;
     if (form.prenom) stagiaireData.prenom = form.prenom;
     if (form.email) stagiaireData.email = form.email;
+    if (form.ecole) stagiaireData.ecole = form.ecole;
+    if (form.formation) stagiaireData.formation = form.formation;
     if (form.telephone) stagiaireData.telephone = form.telephone;
 
     // remuneration, on récupère les donnes de la remuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
@@ -316,6 +320,24 @@ function UpdateStage() {
             name="email"
             placeholder="Email"
             value={form.email}
+            onChange={handleChange}
+          />
+          <label className={styles.label}>Ecole</label>
+          <input
+            className={styles.input}
+            type="text"
+            name="ecole"
+            placeholder="Ecole"
+            value={form.ecole}
+            onChange={handleChange}
+          />
+          <label className={styles.label}>Formation</label>
+          <input
+            className={styles.input}
+            type="text"
+            name="formation"
+            placeholder="Formation"
+            value={form.formation}
             onChange={handleChange}
           />
           <label className={styles.label}>Téléphone</label>
