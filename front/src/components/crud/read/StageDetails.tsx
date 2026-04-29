@@ -121,7 +121,7 @@ const StagesProvisoires = () => {
 
     return (
         <>
-            <button className={styles.retour} onClick={() => navigate(-1)}> Retour</button>
+            <button className={styles.retour} onClick={() => navigate(-1)}>← Retour</button>
 
             {stage && (
                 <div className={styles.container}>
@@ -151,17 +151,50 @@ const StagesProvisoires = () => {
                             <span className={styles.label}>Compétences à développer</span>
                             <span className={styles.valeur}>{stage.developpement_competences}</span>
                         </div>
+
+                        <hr className={styles.separateur}/>
+
                         <div className={styles.champ}>
                             <span className={styles.label}>Stagiaire</span>
                             <span className={styles.valeur}>{stagiaire?.nom} {stagiaire?.prenom}</span>
                         </div>
                         <div className={styles.champ}>
+                            <span className={styles.label}>École du stagiaire</span>
+                            <span className={styles.valeur}>{stagiaire?.ecole}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Formation du stagiaire</span>
+                            <span className={styles.valeur}>{stagiaire?.formation}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Email du stagiaire</span>
+                            <span className={styles.valeur}>{stagiaire?.email}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Numéro de téléphone du stagiaire</span>
+                            <span className={styles.valeur}>{stagiaire?.telephone}</span>
+                        </div>
+
+                        <hr className={styles.separateur}/>
+
+                        <div className={styles.champ}>
                             <span className={styles.label}>Tuteur</span>
                             <span className={styles.valeur}>{tuteur?.prenom} {tuteur?.nom}</span>
                         </div>
                         <div className={styles.champ}>
+                            <span className={styles.label}>Service du tuteur</span>
+                            <span className={styles.valeur}>{tuteur?.service}</span>
+                        </div>
+                        <div className={styles.champ}>
+                            <span className={styles.label}>Email du tuteur</span>
+                            <span className={styles.valeur}>{tuteur?.email}</span>
+                        </div>
+
+                        <hr className={styles.separateur}/>
+
+                        <div className={styles.champ}>
                             <span className={styles.label}>Montant de la rémunération</span>
-                            <span className={styles.valeur}>{remuneration?.montant_remunere}</span>
+                            <span className={styles.valeur}>{remuneration?.montant_remunere} €</span>
                         </div>
                     </div>
                 </div>
