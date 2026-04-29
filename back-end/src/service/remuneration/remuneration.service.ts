@@ -102,10 +102,11 @@ export class RemunerationService {
       remuneration.montant_remunere = null;
     }
 
-    await this.remunerationRepositoryCrud.create(remuneration);
+    const Remu = await this.remunerationRepositoryCrud.create(remuneration);
 
     return {
       message: 'Rémuneration crée avec succès',
+      id: Remu.id_remuneration,
     };
   }
 }

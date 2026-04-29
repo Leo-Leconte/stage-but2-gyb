@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { StageRepositoryCrud } from 'src/repository/stage/StageRepositoryCrud';
-import {CreateStageDto} from "../../repository/stage/dto/stage.dto";
+import { CreateStageDto } from '../../repository/stage/dto/stage.dto';
 
 @Injectable()
 export class StageService {
@@ -79,6 +79,7 @@ export class StageService {
 
     return {
       message: 'Stage crée avec succès',
+      stage: stage,
     };
   }
 }
