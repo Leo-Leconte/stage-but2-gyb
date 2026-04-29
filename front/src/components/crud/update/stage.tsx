@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styles from "./update.module.css";
 function UpdateStage() {
   const navigate = useNavigate();
@@ -211,6 +210,10 @@ function UpdateStage() {
           ← Retour
         </button>
         <h2 className={styles.titre}>Modifier un stage</h2>
+        <h3 className={styles.soustitle}>
+          {" "}
+          Pour garder les anciennes information laisser la case vide{" "}
+        </h3>
         <form className={styles.form} onSubmit={handleSubmit}>
           <h3 className={styles.soustitle}>Informations du stage</h3>
           <label className={styles.label}>Intitule</label>
