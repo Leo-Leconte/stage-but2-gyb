@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import styles from "./create.module.css";
-
+// TODO fix que quand on cree les id remuneration , stagiaire et tuteur sont bien assigne et quand on voit en detail tous les id sont bien affiche
 function CreateStage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -168,22 +168,9 @@ function CreateStage() {
       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
     };
 
-    if (Object.keys(stageData).length > 0) {
-      const response = await fetch(`http://127.0.0.1:3000/api/stage/create`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(stageData),
-      });
-      const reussit = await response.json();
-      if (response.ok) {
-        setSuccess({ succes: reussit.message });
-        setTimeout(() => navigate("/stagesProvisoires"), 1500);
-      } else {
-        setErrors({ err: reussit.message });
-      }
-    }
-    if (Object.keys(stagiaireData).length > 0) {
-      const response = await fetch(
+    // on envoie les donnes du stagiaire et de la remuneration avant d'envoyer les donnes du stage pour récupérer les id du stagiaire et de la remuneration et les mettre dans les donnes du stage pour pas avoir de problème d'id null
+    try {
+      const resStagiaire = await fetch(
         `http://127.0.0.1:3000/api/stagiaire/create`,
         {
           method: "POST",
@@ -191,16 +178,10 @@ function CreateStage() {
           body: JSON.stringify(stagiaireData),
         },
       );
-      const reussit = await response.json();
-      if (response.ok) {
-        setSuccess({ succes: reussit.message });
-        setTimeout(() => navigate("/stagesProvisoires"), 1500);
-      } else {
-        setErrors({ err: reussit.message });
-      }
-    }
-    if (Object.keys(remunerationData).length > 0) {
-      const response = await fetch(
+      const dataStagiaire = await resStagiaire.json();
+      const idStagiaire = dataStagiaire.id;
+
+      const resRemun = await fetch(
         `http://127.0.0.1:3000/api/remuneration/create`,
         {
           method: "POST",
@@ -208,13 +189,27 @@ function CreateStage() {
           body: JSON.stringify(remunerationData),
         },
       );
-      const reussit = await response.json();
-      if (response.ok) {
-        setSuccess({ succes: reussit.message });
+      const dataRemun = await resRemun.json();
+      const idRemuneration = dataRemun.id;
+
+      const finalStageData = {
+        ...stageData,
+        id_stagiaire: idStagiaire,
+        id_remuneration: idRemuneration,
+      };
+
+      const resStage = await fetch(`http://127.0.0.1:3000/api/stage/create`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(finalStageData),
+      });
+
+      if (resStage.ok) {
+        setSuccess({ succes: "Stage créés avec succès " });
         setTimeout(() => navigate("/stagesProvisoires"), 1500);
-      } else {
-        setErrors({ err: reussit.message });
       }
+    } catch (error) {
+      setErrors({ err: "Erreur lors de la création complète" });
     }
   }
 
@@ -291,14 +286,16 @@ function CreateStage() {
             onChange={handleChange}
             className={styles.select}
           >
-            <option value="" className={styles.select}>
+            <option key="default" value="" className={styles.select}>
               -- Choisir un tuteur --
             </option>
-            {tuteurs.map((tuteur) => (
-              <option key={tuteur.id_tuteur} value={tuteur.id_tuteur}>
-                {tuteur.nom} {tuteur.prenom}
-              </option>
-            ))}
+            {tuteurs.map((tuteur, index) => {
+              return (
+                <option key={tuteur.id || index} value={tuteur.id}>
+                  {tuteur.nom} {tuteur.prenom}
+                </option>
+              );
+            })}
           </select>
           <h3 className={styles.soustitle}>Informations du stagiaire</h3>
 
