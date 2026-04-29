@@ -126,7 +126,7 @@ function UpdateStage() {
     const stagiaireData: any = {};
     const remunerationData: any = {};
 
-    // Stage, on récupère les donnes du stage et on les met sans stageData, si le champ est vide on le met pas pour pas écraser les donnes deja existante
+    // Stage, on récupère les donnes du stage et on les met dans stageData, si le champ est vide on le met pas pour pas écraser les donnes deja existante
     if (form.intitule) stageData.intitule = form.intitule;
     if (form.description_missions)
       stageData.description_missions = form.description_missions;
@@ -214,13 +214,13 @@ function UpdateStage() {
           ← Retour
         </button>
         <h2 className={styles.titre}>Modifier un stage</h2>
-        <h3 className={styles.soustitle}>
+        <h3 className={styles.subtitle}>
           {" "}
           Pour garder les anciennes information laisser la case vide{" "}
         </h3>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h3 className={styles.soustitle}>Informations du stage</h3>
-          <label className={styles.label}>Intitule</label>
+          <h3 className={styles.subtitle}>Informations du stage</h3>
+          <label className={styles.label}>Intitulé</label>
           <input
             type="text"
             name="intitule"
@@ -249,7 +249,7 @@ function UpdateStage() {
             className={styles.input}
             onChange={handleChange}
           />
-          <label className={styles.label}>Date de debut</label>
+          <label className={styles.label}>Date de début</label>
 
           <input
             type="date"
@@ -293,7 +293,7 @@ function UpdateStage() {
               </option>
             ))}
           </select>
-          <h3 className={styles.soustitle}>Informations du stagiaire</h3>
+          <h3 className={styles.subtitle}>Informations du stagiaire</h3>
 
           <label className={styles.label}>Nom</label>
           <input
@@ -349,7 +349,7 @@ function UpdateStage() {
             value={form.telephone}
             onChange={handleChange}
           />
-          <h3 className={styles.soustitle}>Informations de la remuneration</h3>
+          <h3 className={styles.subtitle}>Informations de la remuneration</h3>
 
           <label className={styles.label}>
             Est rémunéré :
