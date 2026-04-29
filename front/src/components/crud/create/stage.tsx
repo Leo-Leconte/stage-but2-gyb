@@ -17,6 +17,8 @@ function CreateStage() {
     nom: "",
     prenom: "",
     email: "",
+    ecole: "",
+    formation: "",
     telephone: "",
     // remuneration
     est_remunere: "",
@@ -56,6 +58,8 @@ function CreateStage() {
       form.nom === "" ||
       form.prenom === "" ||
       form.email === "" ||
+      form.ecole === "" ||
+      form.formation === "" ||
       form.telephone === "" ||
       // stage
       form.id_tuteur === "" ||
@@ -154,6 +158,8 @@ function CreateStage() {
     if (form.nom) stagiaireData.nom = form.nom;
     if (form.prenom) stagiaireData.prenom = form.prenom;
     if (form.email) stagiaireData.email = form.email;
+    if (form.ecole) stagiaireData.ecole = form.ecole;
+    if (form.formation) stagiaireData.formation = form.formation;
     if (form.telephone) stagiaireData.telephone = form.telephone;
 
     // remuneration, on récupère les donnes de la remuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
@@ -324,6 +330,24 @@ function CreateStage() {
             name="email"
             placeholder="Email"
             value={form.email}
+            onChange={handleChange}
+          />
+          <label className={styles.label}>Ecole</label>
+          <input
+            className={styles.input}
+            type="text"
+            name="ecole"
+            placeholder="Ecole"
+            value={form.ecole}
+            onChange={handleChange}
+          />
+          <label className={styles.label}>Formation</label>
+          <input
+            className={styles.input}
+            type="text"
+            name="formation"
+            placeholder="Formation"
+            value={form.formation}
             onChange={handleChange}
           />
           <label className={styles.label}>Téléphone</label>
