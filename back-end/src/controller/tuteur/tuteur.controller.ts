@@ -1,36 +1,59 @@
 import {
-    Controller,
-    Get,
-    Param,
-    ParseIntPipe,
-    UseGuards,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { TuteurService } from '../../service/tuteur/tuteur.service';
 import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
-
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('api/tuteur')
 export class TuteurController {
-    constructor(private readonly TuteurService: TuteurService) {
-    }
+  constructor(private readonly TuteurService: TuteurService) {}
 
-    @Get()
-    @UseGuards(CollaborateurRoleGuard)
-    async findAll() {
-        try {
-            return await this.TuteurService.findAll();
-        } catch (error) {
-            console.error('Erreur findAll tuteur', error);
-        }
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Liste des tuteurs',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Liste des tuteurs charger avec succes',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Accès refusé',
+  })
+  @Get()
+  @UseGuards(CollaborateurRoleGuard)
+  async findAll() {
+    try {
+      return await this.TuteurService.findAll();
+    } catch (error) {
+      console.error('Erreur findAll tuteur', error);
     }
+  }
 
-    @Get(':id')
-    @UseGuards(CollaborateurRoleGuard)
-    async findById(@Param('id', ParseIntPipe) id: number) {
-        try {
-            return await this.TuteurService.findByid(id);
-        } catch (error) {
-            console.error('Erreur findById tuteur', error);
-        }
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Tuteur par id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Tuteur charger avec succes',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Accès refusé',
+  })
+  @Get(':id')
+  @UseGuards(CollaborateurRoleGuard)
+  async findById(@Param('id', ParseIntPipe) id: number) {
+    try {
+      return await this.TuteurService.findByid(id);
+    } catch (error) {
+      console.error('Erreur findById tuteur', error);
     }
+  }
 }
