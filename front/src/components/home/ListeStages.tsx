@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import {useNavigate} from "react-router";
-import styles from './StagesProvisoires.module.css'
+import styles from './ListeStages.module.css'
 import PopUp from "../popUp/PopUp.tsx";
 
 type StageType = {
@@ -35,7 +35,7 @@ type StagiaireType = {
     telephone: string;
 }
 
-const StagesProvisoires = () => {
+const ListeStages = () => {
     const [stages, setStages] = useState<StageType[]>([]);
     const [message, setMessage] = useState('');
     const [tuteurs, setTuteurs] = useState<TuteurType[]>([]);
@@ -146,4 +146,4 @@ const StagesProvisoires = () => {
     );
 };
 
-export default StagesProvisoires;
+export default ListeStages;
