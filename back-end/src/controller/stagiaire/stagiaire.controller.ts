@@ -16,6 +16,11 @@ import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
 export class StagiaireController {
   constructor(private readonly StagiaireService: StagiaireService) {}
 
+  /**
+   * @path {GET} /api/stagiaire
+   *
+   * Permet de recuperer tous les stagiaires
+   */
   @Get()
   @UseGuards(CollaborateurRoleGuard)
   async findAll() {
@@ -26,6 +31,12 @@ export class StagiaireController {
     }
   }
 
+  /**
+   * @Path {GET} /api/stagiaire/:id
+   * @param id
+   *
+   * Permet de recuperer un stagiaire par son id
+   */
   @Get(':id')
   @UseGuards(CollaborateurRoleGuard)
   async findById(@Param('id', ParseIntPipe) id: number) {
@@ -36,6 +47,12 @@ export class StagiaireController {
     }
   }
 
+  /**
+   * @Path {DELETE} /api/stagiaire/:id
+   * @param id
+   *
+   * Permet de supprimer un stagiaire par son id
+   */
   @Delete(':id')
   @UseGuards(CollaborateurRoleGuard)
   async delete(@Param('id', ParseIntPipe) id: number) {
@@ -46,6 +63,12 @@ export class StagiaireController {
     }
   }
 
+  /**
+   * @Path {POST} /api/stagiaire/create
+   * @param stagiaire
+   *
+   * Permet de creer un stagiaire
+   */
   @Post('/create')
   @UseGuards(CollaborateurRoleGuard)
   async create(@Body() stagiaire: any) {
@@ -56,6 +79,13 @@ export class StagiaireController {
     }
   }
 
+  /**
+   * @Path {PUT} /api/stagiaire/:id
+   * @param id
+   * @param stagiaire
+   *
+   * Permet de modifier un stagiaire par son id
+   */
   @Put(':id')
   @UseGuards(CollaborateurRoleGuard)
   async update(@Param('id', ParseIntPipe) id: number, @Body() stagiaire: any) {
