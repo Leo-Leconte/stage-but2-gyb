@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -13,7 +14,19 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
+  const config = new DocumentBuilder()
+    .setTitle('Gestion des stages')
+    .setDescription('API pour la gestion des stages')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .addTag('stages')
+    .build();
+  const document = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document, {
+    jsonDocumentUrl: '/api-json',
+  });
+
   await app.listen(process.env.PORT ?? 3000);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`L'application tourne sur le port: ${await app.getUrl()}`);
 }
 bootstrap();
