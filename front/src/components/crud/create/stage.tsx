@@ -224,7 +224,7 @@ function CreateStage() {
 
       if (resStage.ok) {
         setSuccess({ succes: "Stage créés avec succès " });
-        setTimeout(() => navigate("/stagesProvisoires"), 1500);
+        setTimeout(() => navigate("/home"), 1500);
       }
     } catch (error) {
       setErrors({ err: "Erreur lors de la création du stage" });

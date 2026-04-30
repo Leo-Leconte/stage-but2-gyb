@@ -166,7 +166,7 @@ function UpdateStage() {
       const reussit = await response.json();
       if (response.ok) {
         setSuccess({ succes: reussit.message });
-        setTimeout(() => navigate("/stagesProvisoires"), 1500);
+        setTimeout(() => navigate("/home"), 1500);
       } else {
         setErrors({ err: reussit.message });
       }
@@ -183,7 +183,7 @@ function UpdateStage() {
       const reussit = await response.json();
       if (response.ok) {
         setSuccess({ succes: reussit.message });
-        setTimeout(() => navigate("/stagesProvisoires"), 1500);
+        setTimeout(() => navigate("/home"), 1500);
       } else {
         setErrors({ err: reussit.message });
       }
@@ -200,7 +200,7 @@ function UpdateStage() {
       const reussit = await response.json();
       if (response.ok) {
         setSuccess({ succes: reussit.message });
-        setTimeout(() => navigate("/stagesProvisoires"), 1500);
+        setTimeout(() => navigate("/home"), 1500);
       } else {
         setErrors({ err: reussit.message });
       }
