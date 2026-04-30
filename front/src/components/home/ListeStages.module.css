@@ -107,3 +107,40 @@
     transition: opacity 0.2s;
 }
 
+.header {
+    padding: 2rem 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header h2 {
+    color: white;
+    font-size: 22px;
+    margin: 0;
+}
+
+.header h3 {
+    color: #8a8a9a;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.creer {
+    margin: 1.5rem 2rem 0;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #f9a03c, #eb4660);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.creer:hover {
+    opacity: 0.88;
+}
