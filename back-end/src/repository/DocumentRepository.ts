@@ -6,7 +6,7 @@ import { Collaborateur } from './CollaborateurRepository';
 export class Document {
 
   @PrimaryGeneratedColumn({name : 'id_document'})
-  id_document: number;
+  id: number;
 
   @Column({ type: 'varchar', length: 255 , name : 'nom_fichier' })
   nom_fichier: string;
