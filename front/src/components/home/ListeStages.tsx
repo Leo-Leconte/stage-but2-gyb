@@ -3,6 +3,9 @@ import {useNavigate} from "react-router";
 import styles from './ListeStages.module.css'
 import PopUp from "../popUp/PopUp.tsx";
 
+/**
+ * type stage pour ne pas avoir l'erreur est null ou ne comprend pas le type
+ */
 type StageType = {
     id: number;
     intitule: string;
@@ -17,6 +20,10 @@ type StageType = {
     id_remuneration: number;
 }
 
+/**
+ * type tuteur pour ne pas avoir l'erreur est null ou ne comprend pas le type
+ */
+
 type TuteurType = {
     id_tuteur: number;
     nom: string;
@@ -24,6 +31,10 @@ type TuteurType = {
     service: string;
     email: string;
 }
+
+/**
+ * type stagiaire pour ne pas avoir l'erreur est null ou ne comprend pas le type
+ */
 
 type StagiaireType = {
     id_stagiaire: number;
@@ -34,7 +45,11 @@ type StagiaireType = {
     email:string;
     telephone: string;
 }
-
+/**
+ * Composant de la page home.
+ * Affiche la liste des stages sous forme de cartes
+ * Permet à un collaborateur d'avoir une vue d'ensemble avec la main sur tous les stages.
+ */
 const ListeStages = () => {
     const [stages, setStages] = useState<StageType[]>([]);
     const [message, setMessage] = useState('');
@@ -43,8 +58,12 @@ const ListeStages = () => {
 
     const navigate = useNavigate();
 
+
     useEffect(() => { // dans un useEffect pour que ça fasse le fetch à chaque fois que la page se charge
 
+        /**
+         * Fonction qui fait un fetch pour avoir tous les stages tuteurs et stagiaires
+         */
         async function fetching(){
 
             const token = localStorage.getItem("access_token"); // Faut récup et envoyer le token vu que la policy a été mise en place mtn :(
@@ -88,6 +107,12 @@ const ListeStages = () => {
         fetching();
     }, []) // le [] c'est pour lui dire de le faire qu'une fois et pas de boucler à l'infini
 
+    /**
+     * fonction qui permet de supprimer un stage
+     * avec un message de confirmation
+     * ainsi qu'une notification de suppression
+     * @param id ; l'id du stage à supprimer
+     */
     async function deleteStage(id: number) {
         const confirmation = window.confirm("êtes-vous sûr de vouloir supprimer ce stage ?");
         if (!confirmation) return;
@@ -105,6 +130,9 @@ const ListeStages = () => {
         setTimeout(() => setMessage(""), 3000);
     }
 
+    /**
+     * fonction qui permet de créer un stage au click
+     */
     function handleCreate() {
         navigate("../crud/create/stage");
     }
