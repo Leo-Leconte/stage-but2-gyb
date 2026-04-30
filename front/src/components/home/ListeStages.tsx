@@ -105,8 +105,19 @@ const ListeStages = () => {
         setTimeout(() => setMessage(""), 3000);
     }
 
+    function handleCreate() {
+        navigate("../crud/create/stage");
+    }
+
     return (
         <>
+            <div className={styles.header}>
+                <h2>Bienvenue sur la page d'accueil !</h2>
+                <h3>Ici créez, visualisez, modifiez, et supprimez vos stages à loisir !</h3>
+                <button className={styles.creer} onClick={handleCreate}>+ Créer un stage</button>
+
+            </div>
+
             {message && <PopUp message={message} />}
             <div className={styles.grille}>
                 {stages.map((stage: any) => {
