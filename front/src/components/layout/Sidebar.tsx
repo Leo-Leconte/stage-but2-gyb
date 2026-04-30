@@ -41,10 +41,6 @@ const Sidebar = ({isOpen} : any) => {
         navigate('/calendrier');
     }
 
-    function handleStages(){
-        navigate('/stagesProvisoires');
-    }
-
 
   return (
       <>
@@ -67,12 +63,6 @@ const Sidebar = ({isOpen} : any) => {
             <a onClick={handleCalendrier} title="Visualisation des stages sur un calendrier interactif (vue mois / semaine)">
               Calendrier
             </a>
-          </div>
-
-          <div className={styles.stages}>
-              <a onClick={handleStages} title="Visualisation des stages sous forme de fiches récaps (provisoire car on a pas encore la vue liste)">
-                  Stages
-              </a>
           </div>
 
           <div className={styles.deconnexion}>
