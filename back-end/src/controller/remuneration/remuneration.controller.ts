@@ -11,6 +11,12 @@ import {
 } from '@nestjs/common';
 import { RemunerationService } from '../../service/remuneration/remuneration.service';
 import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 
 @Controller('api/remuneration')
 export class RemunerationController {
@@ -19,6 +25,11 @@ export class RemunerationController {
   /**
    * Permet de recuperer tous les stages
    */
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Chercher une rémuneration par son id' })
+  @ApiResponse({ status: 200, description: 'Rémuneration trouvée avec succes' })
+  @ApiResponse({ status: 403, description: 'Accès refusé' })
+  @ApiBody({})
   @Get()
   @UseGuards(CollaborateurRoleGuard)
   async findAll() {
@@ -33,6 +44,14 @@ export class RemunerationController {
    * Permet de recuperer un stage par son id
    * @param id
    */
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Liste des rémunerations' })
+  @ApiResponse({
+    status: 200,
+    description: 'Liste des rémuneration charger avec succes',
+  })
+  @ApiResponse({ status: 403, description: 'Accès refusé' })
+  @ApiBody({})
   @Get(':id')
   @UseGuards(CollaborateurRoleGuard)
   async findById(@Param('id', ParseIntPipe) id: number) {
@@ -47,6 +66,14 @@ export class RemunerationController {
    * Permet de supprimer un stage par son id
    * @param id
    */
+  @ApiBearerAuth()
+  @ApiOperation({ summary: "Suppression d'une rémuneration" })
+  @ApiResponse({
+    status: 200,
+    description: 'Suppression de la rémuneration avec succes',
+  })
+  @ApiResponse({ status: 403, description: 'Accès refusé' })
+  @ApiBody({})
   @Delete(':id')
   @UseGuards(CollaborateurRoleGuard)
   async delete(@Param('id', ParseIntPipe) id: number) {
@@ -61,6 +88,14 @@ export class RemunerationController {
    * Permet de creer un stage
    * @param remuneration
    */
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Creer une rémuneration' })
+  @ApiResponse({
+    status: 200,
+    description: 'Ajout de la rémuneration avec succes',
+  })
+  @ApiResponse({ status: 403, description: 'Accès refusé' })
+  @ApiBody({})
   @Post('/create')
   @UseGuards(CollaborateurRoleGuard)
   async create(@Body() remuneration: any) {
@@ -76,6 +111,14 @@ export class RemunerationController {
    * @param id
    * @param remuneration
    */
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Mise a jour de la rémuneration' })
+  @ApiResponse({
+    status: 200,
+    description: 'Mise a jour de la rémuneration avec succes',
+  })
+  @ApiResponse({ status: 403, description: 'Accès refusé' })
+  @ApiBody({})
   @Put(':id')
   @UseGuards(CollaborateurRoleGuard)
   async update(
