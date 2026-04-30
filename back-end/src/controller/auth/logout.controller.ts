@@ -1,5 +1,11 @@
 import { Controller, Headers, Post } from '@nestjs/common';
 import { LogoutService } from '../../service/auth/logout.service';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiHeaders,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 
 @Controller('api/auth')
 export class LogoutController {
@@ -14,8 +20,11 @@ export class LogoutController {
    * @param authHeader ; le token
    * @returns un message de confirmation
    */
-
+  @ApiOperation({ summary: 'Deconnexion' })
+  @ApiBearerAuth()
   @Post('logout')
+  @ApiResponse({ status: 200, description: 'Deconnexion réussie.' })
+  @ApiResponse({ status: 401, description: 'Token invalide.' })
   async logout(@Headers('authorization') authHeader: string) {
     try {
       return await this.logoutService.logout(authHeader);
