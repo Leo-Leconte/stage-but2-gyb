@@ -34,7 +34,12 @@ export class DocumentRepositoryCrud {
     }
 
     async findByIdStage(id_stage: number) {
-        return this.document.find({ where: { id_stage } });
+
+        console.log("Je passe dans le respo");
+        console.log(id_stage);
+        const test=await this.document.find({ where: { id_stage } });
+        console.log(test);
+        return test;
     }
 
 
