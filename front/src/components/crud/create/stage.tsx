@@ -29,6 +29,9 @@ function CreateStage() {
   const [success, setSuccess] = useState({ succes: "" });
   const [tuteurs, setTuteurs] = useState<any[]>([]);
 
+  /**
+   * Permet à chaque création d'un stage de récupérer tous les tuteurs pour pouvoir les afficher dans le select
+   */
   useEffect(() => {
     const fetchTuteur = async () => {
       const response = await fetch("http://127.0.0.1:3000/api/tuteur/", {
@@ -52,13 +55,15 @@ function CreateStage() {
   }
 
   /**
+   * Permet de vérifier si les donnes sont correctes avant d'envoyer les donnes au backend
+   *
    * @const telRegex 10 chiffres
    * @const emailRegex valide email (contient un @ et un .)
    * @param e
    *
-   * Beaucoup de condition pour verifier si les donnes sont correctes avant d'envoyer les donnes au backend
-   * Une condition que toute les cases soit remplie avant de pouvoir cree un stage
-   * On envoie les donnes au back , chaque table a sa propre route pour que quand on envoie se soit a la bonne table et eviter tout probleme de cle etrangere
+   * Beaucoup de condition pour vérifier si les donnes sont correctes avant d'envoyer les donnes au backend
+   * Une condition que toute les cases soit remplie avant de pouvoir crée un stage
+   * On envoie les donnes au back , chaque table a sa propre route pour que quand on envoie se soit a la bonne table et éviter tout probleme de cle étrangère
    */
   async function handleSubmit(e: any) {
     const telRegex = /^[0-9]{10}$/; // permet de verifie si le numero de telephone est de 10 chiffres est surtout contient que des chiffres
@@ -96,7 +101,7 @@ function CreateStage() {
       return;
     }
 
-    // s'il met vrai, mais n'a pas rempli le montant de la remuneration alors, on affiche un message d'erreur et on ne peut pas enregistrer
+    // s'il met vrai, mais n'a pas rempli le montant de la rémuneration alors, on affiche un message d'erreur et on ne peut pas enregistrer
     if (form.est_remunere === "true" && form.montant_remunere === "0") {
       setErrors({
         err: "Le stagiaire est rémunéré, veuillez remplir le montant de la rémunération",
@@ -112,12 +117,15 @@ function CreateStage() {
       return;
     }
 
+    // vérifier si le numero de telephone est correct
     if (telRegex.test(form.telephone) === false) {
       setErrors({
         err: "Numero de telphone invalide",
       });
       return;
     }
+
+    // vérifier si l'email est correct'
     if (emailRegex.test(form.email) === false) {
       setErrors({
         err: "Email invalide",
@@ -125,6 +133,7 @@ function CreateStage() {
       return;
     }
 
+    // vérifier si la date de fin est supérieure a la date de debut
     if (form.date_debut === "" && form.date_fin !== "") {
       setErrors({
         err: "La date de début doit être remplie si la date de fin est remplie ",
@@ -132,6 +141,7 @@ function CreateStage() {
       return;
     }
 
+    // vérifier si la date de fin est supérieure a la date de debut
     if (form.date_fin === "" && form.date_debut !== "") {
       setErrors({
         err: "La date de fin doit etre remplie si la date de debut est remplie",
@@ -139,6 +149,7 @@ function CreateStage() {
       return;
     }
 
+    // vérifier si la date de fin est supérieure a la date de debut et que les dates soit bien remplit
     if (
       form.date_debut !== "" &&
       form.date_fin !== "" &&
@@ -186,7 +197,7 @@ function CreateStage() {
       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
     };
 
-    // on envoie les donnes du stagiaire et de la remuneration avant d'envoyer les donnes du stage pour récupérer les id du stagiaire et de la remuneration et les mettre dans les donnes du stage pour pas avoir de problème d'id null
+    // on envoie les donnes du stagiaire et de la rémuneration avant d'envoyer les donnes du stage pour récupérer les id du stagiaire et de la rémuneration et les mettre dans les donnes du stage pour pas avoir de problème d'id null
     try {
       const resStagiaire = await fetch(
         `http://127.0.0.1:3000/api/stagiaire/create`,

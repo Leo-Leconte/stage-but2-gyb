@@ -9,5 +9,5 @@ export class Remuneration {
   est_remunere: boolean;
 
   @Column({ type: 'numeric', name: 'montant_remunere', nullable: true })
-  montant_remunere: number | null; // le montant de la remuneration est optionnel il peut etre null comme il peut etre remunere
+  montant_remunere: number | null; // le montant de la remuneration est optionnel, il peut être null ou bien, il peut être remunere
 }

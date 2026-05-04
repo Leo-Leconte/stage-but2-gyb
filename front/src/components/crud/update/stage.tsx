@@ -32,8 +32,8 @@ function UpdateStage() {
   const [tuteurs, setTuteurs] = useState<any[]>([]);
 
   /**
-   * Permet de voir quelle id est relié au stage qui sera modifié et de recuperer tout les tuteurs pour les afficher dans le select et pouvoir le choisir
-   * Cela permet d eviter de modifier tout les id 1 alors que le stagiaire liee au stage 1 est peut etre le 4 ou 2
+   * Permet de voir quelle id est relié au stage qui sera modifié et de recuperer tous les tuteurs pour les afficher dans le select et pouvoir le choisir
+   * Cela permet d'éviter de modifier tous les id 1 alors que le stagiaire liee au stage 1 est peut-être le 4 ou 2
    */
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +64,7 @@ function UpdateStage() {
   const [success, setSuccess] = useState({ succes: "" });
 
   /**
-   * Met a jour les information du stage dynamiquement
+   * Met a jour les informations du stage dynamiquement
    * @param e
    */
   function handleChange(e: any) {
@@ -73,15 +73,16 @@ function UpdateStage() {
   }
 
   /**
-   * Permet de verifie que chaque champ et bien valide , que les dates soit coherentes et que chaque donnes renvoi bien sur la bonne table pour pas avoir d erreur PostgresSQL
-   * Les fetch sont séparé pour pas avoir de problème d'envoie de donnes et pour pouvoir gérer les erreurs plus facilement, si une requete echoue, les autres peuvent quand même reussir et on affiche l'erreur de la requete qui a echoué
+   * Permet de vérifier que chaque champ et bien valide, que les dates soient coherentes et que chaque donne renvoi bien sur la bonne table pour pas avoir d'erreur PostgresSQL
+   * Les fetch sont séparé pour pas avoir de problème d'envoie de donnes et pour pouvoir gérer les erreurs plus facilement, si une requête echoue, les autres peuvent quand même reussir et on affiche l'erreur de la requete qui a echoué
    * @param e
    */
   async function handleSubmit(e: any) {
-    const telRegex = /^[0-9]{10}$/; // permet de verifie si le numero de telephone est de 10 chiffres est surtout contient que des chiffres
+    const telRegex = /^[0-9]{10}$/; // permet de vérifier si le numero de telephone est bien composé de 10 chiffres est surtout qu'il ne contient que des chiffres
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // permet de verifier si l'email est valide'
     e.preventDefault();
 
+    // Vérifie le numéro de telephone
     if (telRegex.test(form.telephone) === false && form.telephone !== "") {
       setErrors({
         err: "Le numero de telephone doit etre de 10 chiffres",
@@ -89,6 +90,7 @@ function UpdateStage() {
       return;
     }
 
+    // Vérifie l'email
     if (emailRegex.test(form.email) === false && form.email !== "") {
       setErrors({
         err: "L'email doit etre valide",
@@ -96,6 +98,7 @@ function UpdateStage() {
       return;
     }
 
+    // Vérifie que si une des 2 dates et remplit l'autre doit l'être aussi
     if (form.date_debut === "" && form.date_fin !== "") {
       setErrors({
         err: "La date de début doit être remplie si la date de fin est remplie ",
@@ -103,6 +106,7 @@ function UpdateStage() {
       return;
     }
 
+    // Vérifie que si une des 2 dates et remplit l'autre doit l'être aussi
     if (form.date_fin === "" && form.date_debut !== "") {
       setErrors({
         err: "La date de fin doit etre remplie si la date de debut est remplie",
@@ -110,6 +114,7 @@ function UpdateStage() {
       return;
     }
 
+    // La date de fin ne peut pas être inférieure à la date de debut
     if (
       form.date_debut !== "" &&
       form.date_fin !== "" &&
@@ -137,7 +142,7 @@ function UpdateStage() {
     if (form.service_accueil) stageData.service_accueil = form.service_accueil;
     if (form.id_tuteur) stageData.id_tuteur = parseInt(form.id_tuteur);
 
-    // stagiaire, on récupère les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
+    // stagiaire, on récupère les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide, on ne le met pas pour pas écraser les donnes déjà existantes
     if (form.nom) stagiaireData.nom = form.nom;
     if (form.prenom) stagiaireData.prenom = form.prenom;
     if (form.email) stagiaireData.email = form.email;
@@ -145,7 +150,7 @@ function UpdateStage() {
     if (form.formation) stagiaireData.formation = form.formation;
     if (form.telephone) stagiaireData.telephone = form.telephone;
 
-    // remuneration, on récupère les donnes de la remuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
+    // rémuneration, on récupère les donnes de la rémuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
     if (form.est_remunere)
       remunerationData.est_remunere = form.est_remunere === "true";
     if (form.montant_remunere)
