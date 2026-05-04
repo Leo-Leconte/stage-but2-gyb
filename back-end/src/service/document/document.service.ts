@@ -32,9 +32,7 @@ export class DocumentService {
 
     async findByIdStage(id_stage: number) {
 
-        console.log("Je passe (avant) !");
         const idStages = await this.documentRepositoryCrud.findByIdStage(id_stage);
-        console.log("Je passe (après) !");
 
         if (idStages===null || idStages.length===0) {
             throw new NotFoundException('document associé au stage introuvable');
