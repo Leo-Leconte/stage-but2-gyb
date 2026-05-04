@@ -43,12 +43,25 @@ const StagesProvisoires = () => {
         montant_remunere:number;
     }
 
+    type DocumentType = {
+        id_document: number;
+        nom_doc: string;
+        type_doc:string;
+        format: string;
+        chemin_stockage:string;
+        est_rempli_en_ligne:boolean;
+        date_depot:Date;
+        id_stage:number;
+        id_collaborateur:number;
+    }
+
 
     const navigate = useNavigate();
     const [stage, setStage] = useState<StageType | null>(null);
     const [tuteur, setTuteur] = useState<TuteurType | null>(null);
     const [stagiaire, setStagiaire] = useState<StagiaireType | null>(null);
     const [remuneration, setRemuneration] = useState<RemunerationType | null>(null);
+    const [document,setDocument] = useState<DocumentType[]>([]);
 
     const { id } = useParams();
 
@@ -109,6 +122,26 @@ const StagesProvisoires = () => {
                     });
                     const contentRemuneration = await reponseApiRemuneration.json();
                     setRemuneration(contentRemuneration.remuneration);
+
+                if(contentStage.stage){
+                    const reponseApiDocument = await fetch (`http://127.0.0.1:3000/api/document/stage/${contentStage.stage.id}`,{
+                        method: "GET",
+                        headers:{
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+
+                    });
+                    const contentDocument = await reponseApiDocument.json();
+                    setDocument(contentDocument.document);
+
+                }
+
+
+
+
+
                 }
 
 
@@ -117,7 +150,7 @@ const StagesProvisoires = () => {
             }
         }
         fetching();
-    });
+    },[id]);
 
     return (
         <>
@@ -126,6 +159,7 @@ const StagesProvisoires = () => {
             {stage && (
                 <div className={styles.container}>
                     <div className={styles.card}>
+
                         <div className={styles.titre}>{stage.intitule}</div>
                         <div className={styles.statut}>{stage.statut}</div>
 
@@ -151,6 +185,12 @@ const StagesProvisoires = () => {
                             <span className={styles.label}>Compétences à développer</span>
                             <span className={styles.valeur}>{stage.developpement_competences}</span>
                         </div>
+
+                        {document.map((doc) => (
+                            <div key={doc.id_document} className={styles.champ}>
+                                <span>{doc.chemin_stockage}</span>
+                            </div>
+                        ))}
 
                         <hr className={styles.separateur}/>
 

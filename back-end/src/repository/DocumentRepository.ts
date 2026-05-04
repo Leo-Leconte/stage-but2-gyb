@@ -20,12 +20,17 @@ export class Document {
   @Column({ type: 'varchar', length: 255 , name : 'chemin_stockage'})
   chemin_stockage: string;
 
-  @Column({ type: 'timestamp' , name : 'date_upload'})
-  date_upload: Date;
+  @Column({ type: 'timestamp' , name : 'date_depot'})
+  date_depot: Date;
 
-  @ForeignKey(() => Stage)
+  @Column({ type: 'int', name: 'id_stage', nullable: true })
   id_stage: number;
 
-  @ForeignKey(() => Collaborateur)
+  @Column({ type: 'int', name: 'id_collaborateur', nullable: true })
   id_collaborateur: number;
+
+  @Column({ type: 'int', name: 'id_document', nullable: true })
+  id_document: number;
 }
+
+
