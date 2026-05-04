@@ -37,7 +37,6 @@ export class DocumentController {
     @Get('stage/:id_stage')
     @UseGuards(CollaborateurRoleGuard)
     async findByIdStage(@Param('id_stage', ParseIntPipe) id_stage: number) {
-        console.log("Je passe !");
         try{
             return await this.documentService.findByIdStage(id_stage)
         } catch (error) {
