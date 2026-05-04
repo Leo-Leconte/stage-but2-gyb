@@ -29,4 +29,16 @@ export class DocumentService {
             document: idS,
         };
     }
+
+    async findByIdStage(id_stage: number) {
+        const idStages = await this.documentRepositoryCrud.findByIdStage(id_stage);
+
+        if (idStages===null || idStages.length===0) {
+            throw new NotFoundException('document associé au stage introuvable');
+        }
+        return {
+            message: `stage ${id_stage}  lié au document trouvé`,
+            document: idStages,
+        };
+    }
 }
