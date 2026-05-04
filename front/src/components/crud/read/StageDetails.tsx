@@ -3,77 +3,142 @@ import { useEffect, useState } from "react";
 import styles from "./StageDetails.module.css";
 import { useNavigate } from "react-router";
 
-const StagesProvisoires = () => {
+/**
+ * Représente un stage avec ses informations générales.
+ */
+type StageType = {
+    /** Identifiant unique du stage */
+    id: number;
+    /** Intitulé du stage */
+    intitule: string;
+    /** Description détaillée des missions confiées au stagiaire */
+    description_missions: string;
+    /** Compétences visées par le stage */
+    developpement_competences: string;
+    /** Date de début du stage (format ISO) */
+    date_debut: string;
+    /** Date de fin du stage (format ISO) */
+    date_fin: string;
+    /** Service d'accueil du stagiaire */
+    service_accueil: string;
+    /** Statut actuel du stage (ex : "En cours", "Terminé") */
+    statut: string;
+    /** Référence vers le stagiaire associé */
+    id_stagiaire: number;
+    /** Référence vers le tuteur associé */
+    id_tuteur: number;
+    /** Référence vers la rémunération associée */
+    id_remuneration: number;
+};
 
-    type StageType = {
-        id: number;
-        intitule: string;
-        description_missions: string;
-        developpement_competences: string;
-        date_debut: string;
-        date_fin: string;
-        service_accueil: string;
-        statut: string;
-        id_stagiaire: number;
-        id_tuteur: number;
-        id_remuneration: number;
-    }
+/**
+ * Représente un tuteur encadrant un stage.
+ */
+type TuteurType = {
+    /** Identifiant unique du tuteur */
+    id_tuteur: number;
+    nom: string;
+    prenom: string;
+    /** Service auquel appartient le tuteur */
+    service: string;
+    email: string;
+};
 
-    type TuteurType = {
-        id_tuteur: number;
-        nom: string;
-        prenom: string;
-        service: string;
-        email: string;
-    }
+/**
+ * Représente un stagiaire.
+ */
+type StagiaireType = {
+    /** Identifiant unique du stagiaire */
+    id_stagiaire: number;
+    nom: string;
+    prenom: string;
+    /** École d'origine du stagiaire */
+    ecole: string;
+    /** Formation suivie par le stagiaire */
+    formation: string;
+    email: string;
+    telephone: string;
+};
 
-    type StagiaireType = {
-        id_stagiaire: number;
-        nom: string;
-        prenom: string;
-        ecole:string;
-        formation:string;
-        email:string;
-        telephone: string;
-    }
+/**
+ * Représente les informations de rémunération d'un stage.
+ */
+type RemunerationType = {
+    /** Identifiant unique de la rémunération */
+    id_remuneration: number;
+    /** Indique si le stage est rémunéré */
+    est_remunere: boolean;
+    /** Montant de la rémunération en euros */
+    montant_remunere: number;
+};
 
-    type RemunerationType = {
-        id_remuneration: number;
-        est_remunere:boolean;
-        montant_remunere:number;
-    }
+/**
+ * Représente un document lié à un stage.
+ */
+type DocumentType = {
+    /** Identifiant unique du document */
+    id: number;
+    /** Nom lisible du document */
+    nom_doc: string;
+    /** Type de document (comme une fiche contact par ex) */
+    type_doc: string;
+    /** Format du fichier (comme pdf par ex) */
+    format: string;
+    /** Chemin relatif vers le fichier */
+    chemin_stockage: string;
+    /** Indique si le document a été rempli en ligne */
+    est_rempli_en_ligne: boolean;
+    /** Date de dépôt du document */
+    date_depot: Date;
+    /** Référence vers le stage associé */
+    id_stage: number;
+    /** Référence vers le collaborateur ayant déposé le document */
+    id_collaborateur: number;
+};
 
-    type DocumentType = {
-        id: number;
-        nom_doc: string;
-        type_doc:string;
-        format: string;
-        chemin_stockage:string;
-        est_rempli_en_ligne:boolean;
-        date_depot:Date;
-        id_stage:number;
-        id_collaborateur:number;
-    }
-
+/**
+ * Composant qui affiche les détails d'un stage
+ * en utilisant des fetchs pour accéder aux données de l'API
+ */
+const StagesDetails = () => {
 
     const navigate = useNavigate();
     const [stage, setStage] = useState<StageType | null>(null);
     const [tuteur, setTuteur] = useState<TuteurType | null>(null);
     const [stagiaire, setStagiaire] = useState<StagiaireType | null>(null);
     const [remuneration, setRemuneration] = useState<RemunerationType | null>(null);
-    const [document, setDocument] = useState<DocumentType[]>([]);
-
-    // État pour gérer le PDF affiché dans l'iframe
+    const [documents, setDocuments] = useState<DocumentType[]>([]);
     const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
+    const [popupOpen, setPopupOpen] = useState(false);
 
     const { id } = useParams();
 
+    /**
+     * Ouvre la popup modale et charge le PDF correspondant au chemin fourni.
+     *
+     * @param chemin ; Chemin relatif du fichier PDF à afficher
+     */
+    const openPdf = (chemin: string) => {
+        setSelectedPdf(chemin);
+        setPopupOpen(true);
+    };
+
+    /**
+     * Ferme la popup modale et réinitialise le PDF sélectionné.
+     */
+    const closePdf = () => {
+        setPopupOpen(false);
+        setSelectedPdf(null);
+    };
+
+    /**
+     * S'effectue à chaque chargement de la page ou changement d'id dans l'url
+     */
     useEffect(() => {
         const token = localStorage.getItem("access_token");
 
         async function fetching() {
             try {
-
                 const reponseApiStage = await fetch(`http://127.0.0.1:3000/api/stage/${id}`, {
                     method: "GET",
                     headers: {
@@ -84,7 +149,6 @@ const StagesProvisoires = () => {
                 });
                 const contentStage = await reponseApiStage.json();
                 setStage(contentStage.stage);
-
 
                 if (contentStage.stage && contentStage.stage.id_tuteur) {
                     const reponseApiTuteur = await fetch(`http://127.0.0.1:3000/api/tuteur/${contentStage.stage.id_tuteur}`, {
@@ -99,98 +163,73 @@ const StagesProvisoires = () => {
                     setTuteur(contentTuteur.tuteur);
                 }
 
-                if (contentStage.stage && contentStage.stage.id_stagiaire){
-                    const reponseApiStagiaire = await fetch(`http://127.0.0.1:3000/api/stagiaire/${contentStage.stage.id_stagiaire}`,{
+                if (contentStage.stage && contentStage.stage.id_stagiaire) {
+                    const reponseApiStagiaire = await fetch(`http://127.0.0.1:3000/api/stagiaire/${contentStage.stage.id_stagiaire}`, {
                         method: "GET",
-                        headers:{
+                        headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${token}`
                         }
-
                     });
                     const contentStagiaire = await reponseApiStagiaire.json();
                     setStagiaire(contentStagiaire.stagiaire);
                 }
 
-                if (contentStage.stage && contentStage.stage.id_remuneration){
-                    const reponseApiRemuneration = await fetch(`http://127.0.0.1:3000/api/remuneration/${contentStage.stage.id_remuneration}`,{
+                if (contentStage.stage && contentStage.stage.id_remuneration) {
+                    const reponseApiRemuneration = await fetch(`http://127.0.0.1:3000/api/remuneration/${contentStage.stage.id_remuneration}`, {
                         method: "GET",
-                        headers:{
+                        headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${token}`
                         }
-
                     });
                     const contentRemuneration = await reponseApiRemuneration.json();
                     setRemuneration(contentRemuneration.remuneration);
                 }
 
-                if(contentStage.stage){
-                    console.log("ICI");
-                    try{
-                        const reponseApiDocument = await fetch (`http://127.0.0.1:3000/api/document/stage/${contentStage.stage.id}`,{
+                if (contentStage.stage) {
+                    try {
+                        const reponseApiDocument = await fetch(`http://127.0.0.1:3000/api/document/stage/${contentStage.stage.id}`, {
                             method: "GET",
-                            headers:{
+                            headers: {
                                 "Accept": "application/json",
                                 "Content-Type": "application/json",
                                 "Authorization": `Bearer ${token}`
                             }
-
                         });
-                        console.log("ICI1");
-
                         const contentDocument = await reponseApiDocument.json();
-                        setDocument(contentDocument.document);
-
-                        console.log("ICI2", contentDocument.document);
-
-                        console.log(contentDocument.document[0].chemin_stockage);
-                        if (contentDocument.document && contentDocument.document.length > 0) {
-                            setSelectedPdf(contentDocument.document[0].chemin_stockage);
-                        }
-
-
-                    } catch(error){
+                        setDocuments(contentDocument.document);
+                    } catch (error) {
                         console.log(error);
                     }
-
-
-
                 }
 
             } catch (err) {
                 console.error("Erreur fetching:", err);
             }
         }
-         fetching();
-    },[id]);
-
-    // Fonction pour transformer le chemin absolu en URL relative de document
-    const getPdfUrl = (path: string) => {
-        // On récupère juste le nom du fichier (ex: ficheContact.pdf)
-        const fileName = path.split('/').pop();
-        // On construit l'URL pointant vers le dossier statique de ton API
-        return `http://127.0.0.1:3000/document/${fileName}`;
-    };
-
+        fetching();
+    }, [id]);
 
     return (
         <>
-            <div className={styles.pdfViewerContainer}>
-                {selectedPdf}
-                {selectedPdf ? (
-                    console.log(selectedPdf),
-                    <iframe
-                        src={"/document/ficheContact.pdf"}
-                        title="Visualiser le PDF"
-                    />
-                ) : (
-                    <p className={styles.noPdf}>Aucun document sélectionné</p>
-                )}
-            </div>
-
+            {popupOpen && selectedPdf && (
+                <div className={styles.overlay} onClick={closePdf}>
+                    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.modalHeader}>
+                            <button onClick={closePdf} className={styles.closeBtn}>✕ Fermer</button>
+                        </div>
+                        <iframe
+                            key={selectedPdf}
+                            src={selectedPdf}
+                            title="Visualiser le PDF"
+                            className={styles.pdfFrame}
+                        />
+                    </div>
+                </div>
+            )}
 
             <button className={styles.retour} onClick={() => navigate(-1)}>← Retour</button>
 
@@ -201,7 +240,7 @@ const StagesProvisoires = () => {
                         <div className={styles.titre}>{stage.intitule}</div>
                         <div className={styles.statut}>{stage.statut}</div>
 
-                        <hr className={styles.separateur}/>
+                        <hr className={styles.separateur} />
 
                         <div className={styles.champ}>
                             <span className={styles.label}>Date de début</span>
@@ -224,22 +263,21 @@ const StagesProvisoires = () => {
                             <span className={styles.valeur}>{stage.developpement_competences}</span>
                         </div>
 
-                        {/* Liste des documents cliquables pour changer le PDF de l'iframe */}
                         <div className={styles.documentSection}>
                             <p className={styles.label}>Documents disponibles :</p>
-                            {document.map((doc) => (
+                            {documents.map((doc) => (
                                 <div key={doc.id} className={styles.documentItem}>
                                     <button
-                                        onClick={() => setSelectedPdf(doc.chemin_stockage)}
+                                        onClick={() => openPdf(doc.chemin_stockage)}
                                         className={styles.pdfSelectButton}
                                     >
-                                        📄 Voir : {doc.nom_doc || doc.chemin_stockage.split('/').pop()}
+                                        Voir : {doc.nom_doc || doc.chemin_stockage.split('/').pop()}
                                     </button>
                                 </div>
                             ))}
                         </div>
 
-                        <hr className={styles.separateur}/>
+                        <hr className={styles.separateur} />
 
                         <div className={styles.champ}>
                             <span className={styles.label}>Stagiaire</span>
@@ -262,7 +300,7 @@ const StagesProvisoires = () => {
                             <span className={styles.valeur}>{stagiaire?.telephone}</span>
                         </div>
 
-                        <hr className={styles.separateur}/>
+                        <hr className={styles.separateur} />
 
                         <div className={styles.champ}>
                             <span className={styles.label}>Tuteur</span>
@@ -277,7 +315,7 @@ const StagesProvisoires = () => {
                             <span className={styles.valeur}>{tuteur?.email}</span>
                         </div>
 
-                        <hr className={styles.separateur}/>
+                        <hr className={styles.separateur} />
 
                         <div className={styles.champ}>
                             <span className={styles.label}>Montant de la rémunération</span>
@@ -290,4 +328,4 @@ const StagesProvisoires = () => {
     );
 };
 
-export default StagesProvisoires;
+export default StagesDetails;
