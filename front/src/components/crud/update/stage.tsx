@@ -73,8 +73,8 @@ function UpdateStage() {
   }
 
   /**
-   * Permet de verifie que chaque champ et bien valide, que les dates soient coherentes et que chaque donne renvoi bien sur la bonne table pour pas avoir d erreur PostgresSQL
-   * Les fetch sont séparé pour pas avoir de problème d'envoie de donnes et pour pouvoir gérer les erreurs plus facilement, si une requete echoue, les autres peuvent quand même reussir et on affiche l'erreur de la requete qui a echoué
+   * Permet de vérifier que chaque champ et bien valide, que les dates soient coherentes et que chaque donne renvoi bien sur la bonne table pour pas avoir d'erreur PostgresSQL
+   * Les fetch sont séparé pour pas avoir de problème d'envoie de donnes et pour pouvoir gérer les erreurs plus facilement, si une requête echoue, les autres peuvent quand même reussir et on affiche l'erreur de la requete qui a echoué
    * @param e
    */
   async function handleSubmit(e: any) {
@@ -142,7 +142,7 @@ function UpdateStage() {
     if (form.service_accueil) stageData.service_accueil = form.service_accueil;
     if (form.id_tuteur) stageData.id_tuteur = parseInt(form.id_tuteur);
 
-    // stagiaire, on récupère les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
+    // stagiaire, on récupère les donnes du stagiaire et on les met dans stagiaireData, si le champ est vide, on ne le met pas pour pas écraser les donnes déjà existantes
     if (form.nom) stagiaireData.nom = form.nom;
     if (form.prenom) stagiaireData.prenom = form.prenom;
     if (form.email) stagiaireData.email = form.email;
@@ -150,7 +150,7 @@ function UpdateStage() {
     if (form.formation) stagiaireData.formation = form.formation;
     if (form.telephone) stagiaireData.telephone = form.telephone;
 
-    // remuneration, on récupère les donnes de la remuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
+    // rémuneration, on récupère les donnes de la rémuneration et on les met dans remunerationData, si le champ est vide, on ne le met pas pour pas écraser les donnes deja existante
     if (form.est_remunere)
       remunerationData.est_remunere = form.est_remunere === "true";
     if (form.montant_remunere)
