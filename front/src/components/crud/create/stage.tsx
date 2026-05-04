@@ -30,7 +30,7 @@ function CreateStage() {
   const [tuteurs, setTuteurs] = useState<any[]>([]);
 
   /**
-   * Permet a chaque création d'un stage de récupérer tout les tuteurs pour pouvoir les afficher dans le select
+   * Permet à chaque création d'un stage de récupérer tous les tuteurs pour pouvoir les afficher dans le select
    */
   useEffect(() => {
     const fetchTuteur = async () => {
