@@ -33,4 +33,16 @@ export class DocumentController {
             console.error('Erreur findById document', error);
         }
     }
+
+    @Get('stage/:id_stage')
+    @UseGuards(CollaborateurRoleGuard)
+    async findByIdStage(@Param('id_stage', ParseIntPipe) id_stage: number) {
+        try{
+            return await this.documentService.findByIdStage(id_stage)
+        } catch (error) {
+            console.error('Erreur findByIdStage document', error);
+        }
+
+
+    }
 }
