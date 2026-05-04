@@ -43,12 +43,25 @@ const StagesProvisoires = () => {
         montant_remunere:number;
     }
 
+    type DocumentType = {
+        id_document: number;
+        nom_doc: string;
+        type_doc:string;
+        format: string;
+        chemin_stockage:string;
+        est_rempli_en_ligne:boolean;
+        date_depot:Date;
+        id_stage:number;
+        id_collaborateur:number;
+    }
+
 
     const navigate = useNavigate();
     const [stage, setStage] = useState<StageType | null>(null);
     const [tuteur, setTuteur] = useState<TuteurType | null>(null);
     const [stagiaire, setStagiaire] = useState<StagiaireType | null>(null);
     const [remuneration, setRemuneration] = useState<RemunerationType | null>(null);
+    const [document,setDocument] = useState<DocumentType | null>(null);
 
     const { id } = useParams();
 
