@@ -11,13 +11,17 @@ import {
 } from '@nestjs/common';
 import { StageService } from '../../service/stage/stage.service';
 import { CollaborateurRoleGuard } from '../../Guard/collaborateurRole.guard';
-import {CreateStageDto} from "../../repository/stage/dto/stage.dto";
-
+import { CreateStageDto } from '../../repository/stage/dto/stage.dto';
 
 @Controller('api/stage')
 export class StageController {
   constructor(private readonly stageService: StageService) {}
 
+  /**
+   * @Path {GET} /api/stage
+   *
+   * Permet de recuperer tous les stages   *
+   */
   @Get()
   @UseGuards(CollaborateurRoleGuard)
   async findAll() {
@@ -28,6 +32,12 @@ export class StageController {
     }
   }
 
+  /**
+   * @Path {GET} /api/stage/:id
+   *
+   * Permet de recuperer le stage par son id
+   * @param id
+   */
   @Get(':id')
   @UseGuards(CollaborateurRoleGuard)
   async findById(@Param('id', ParseIntPipe) id: number) {
@@ -38,6 +48,12 @@ export class StageController {
     }
   }
 
+  /**
+   * @Path {DELETE} /api/stage/id
+   *
+   * Supprimer un stage via son id
+   * @param id
+   */
   @Delete(':id')
   @UseGuards(CollaborateurRoleGuard)
   async delete(@Param('id', ParseIntPipe) id: number) {
@@ -48,6 +64,12 @@ export class StageController {
     }
   }
 
+  /**
+   * @Path {POST} /api/stage/create
+   *
+   * Permet de crée un stage
+   * @param stage
+   */
   @Post('/create')
   @UseGuards(CollaborateurRoleGuard)
   async create(@Body() stage: CreateStageDto) {
@@ -58,9 +80,19 @@ export class StageController {
     }
   }
 
+  /**
+   * @Path {PUT} /api/stage/id
+   *
+   * Permet de modifier un stage via son id
+   * @param id
+   * @param stage
+   */
   @Put(':id')
   @UseGuards(CollaborateurRoleGuard)
-  async update(@Param('id', ParseIntPipe) id: number, @Body() stage: CreateStageDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() stage: CreateStageDto,
+  ) {
     try {
       return await this.stageService.update(id, stage);
     } catch (error) {
