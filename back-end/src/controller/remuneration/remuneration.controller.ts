@@ -17,6 +17,8 @@ export class RemunerationController {
   constructor(private readonly remunerationService: RemunerationService) {}
 
   /**
+   * @Path {GET} /api/remuneration
+   *
    * Permet de recuperer tous les stages
    */
   @Get()
@@ -30,6 +32,8 @@ export class RemunerationController {
   }
 
   /**
+   * @Path {GET} /api/remuneration/id
+   *
    * Permet de recuperer un stage par son id
    * @param id
    */
@@ -44,6 +48,8 @@ export class RemunerationController {
   }
 
   /**
+   * @Path {Delete} /api/remuneration/id
+   *
    * Permet de supprimer un stage par son id
    * @param id
    */
@@ -58,6 +64,8 @@ export class RemunerationController {
   }
 
   /**
+   * @Path {POST} /api/remuneration/create
+   *
    * Permet de creer un stage
    * @param remuneration
    */
@@ -72,6 +80,8 @@ export class RemunerationController {
   }
 
   /**
+   * @Path {POST} /api/remuneration/id
+   *
    * Permet de modifier un stage par son id
    * @param id
    * @param remuneration

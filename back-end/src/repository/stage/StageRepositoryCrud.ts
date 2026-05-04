@@ -2,13 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Stage } from '../StageRepository';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import {CreateStageDto} from "./dto/stage.dto";
-
-/**
- * stage mais sans le statut histoire de ne pas pouvoir le modifier
- */
-
-
+import { CreateStageDto } from './dto/stage.dto';
 
 @Injectable()
 export class StageRepositoryCrud {
@@ -45,30 +39,26 @@ export class StageRepositoryCrud {
     return this.stage.delete(id);
   }
 
-
   /**
-   * fonction qui permet de calculer le statut
+   * fonction qui permet de calculer le statut, sans pouvoir le modifier manuellement
    * @param stage ; le stage à modifier / créer
    * @param statut ; un statut pour avoir assez de params dans la fonction update
    */
-  calcStatut(stage:Stage) {
-    const now=new Date();
+  calcStatut(stage: Stage) {
+    const now = new Date();
     const dateFin = new Date(stage.date_fin);
     const dateDebut = new Date(stage.date_debut);
 
-    if(dateFin > now && dateDebut > now){
-      stage.statut="a venir";
-    }
-    else{
-      if(dateFin > now && dateDebut <= now){
-        stage.statut="en cours";
-      }
-      else{
-        stage.statut="termine"
+    if (dateFin > now && dateDebut > now) {
+      stage.statut = 'a venir';
+    } else {
+      if (dateFin > now && dateDebut <= now) {
+        stage.statut = 'en cours';
+      } else {
+        stage.statut = 'termine';
       }
     }
   }
-
 
   /**
    * Permet de modifier un stage par son id
@@ -76,7 +66,7 @@ export class StageRepositoryCrud {
    * @param stage
    */
   async update(id: number, stageDto: CreateStageDto) {
-    const stage= { ...stageDto } as Stage;
+    const stage = { ...stageDto } as Stage;
     this.calcStatut(stage);
     return await this.stage.update(id, stage);
   }

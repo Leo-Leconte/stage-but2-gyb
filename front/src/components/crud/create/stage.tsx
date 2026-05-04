@@ -29,6 +29,9 @@ function CreateStage() {
   const [success, setSuccess] = useState({ succes: "" });
   const [tuteurs, setTuteurs] = useState<any[]>([]);
 
+  /**
+   * Permet a chaque creation d'un stage de recuperer tout les tuteurs pour pouvoir les afficher dans le select
+   */
   useEffect(() => {
     const fetchTuteur = async () => {
       const response = await fetch("http://127.0.0.1:3000/api/tuteur/", {
@@ -52,6 +55,8 @@ function CreateStage() {
   }
 
   /**
+   * Permet de verifier si les donnes sont correctes avant d'envoyer les donnes au backend
+   *
    * @const telRegex 10 chiffres
    * @const emailRegex valide email (contient un @ et un .)
    * @param e
@@ -112,12 +117,15 @@ function CreateStage() {
       return;
     }
 
+    // verifier si le numero de telephone est correct
     if (telRegex.test(form.telephone) === false) {
       setErrors({
         err: "Numero de telphone invalide",
       });
       return;
     }
+
+    // verifier si l'email est correct'
     if (emailRegex.test(form.email) === false) {
       setErrors({
         err: "Email invalide",
@@ -125,6 +133,7 @@ function CreateStage() {
       return;
     }
 
+    // verifier si la date de fin est superieur a la date de debut
     if (form.date_debut === "" && form.date_fin !== "") {
       setErrors({
         err: "La date de début doit être remplie si la date de fin est remplie ",
@@ -132,6 +141,7 @@ function CreateStage() {
       return;
     }
 
+    // verifier si la date de fin est superieur a la date de debut
     if (form.date_fin === "" && form.date_debut !== "") {
       setErrors({
         err: "La date de fin doit etre remplie si la date de debut est remplie",
@@ -139,6 +149,7 @@ function CreateStage() {
       return;
     }
 
+    // verifier si la date de fin est superieur a la date de debut et que les dates soit bien remplit
     if (
       form.date_debut !== "" &&
       form.date_fin !== "" &&
