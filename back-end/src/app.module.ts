@@ -11,6 +11,9 @@ import { StagiaireModule } from './module/stagiaire/stagiaire.module';
 import { Stagiaire } from './repository/StagiaireRepository';
 import { Tuteur } from './repository/TuteurRepository';
 import { TuteurModule } from './module/tuteur/tuteur.module';
+import { DocumentModule } from './module/document/document.module';
+import { Document } from './repository/DocumentRepository';
+
 
 
 
@@ -26,7 +29,7 @@ import { TuteurModule } from './module/tuteur/tuteur.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Collaborateur, Stage, Remuneration,Stagiaire,Tuteur],
+      entities: [Collaborateur, Stage, Remuneration,Stagiaire,Tuteur, Document],
       synchronize: false,
       logging: false,
     }),
@@ -35,6 +38,7 @@ import { TuteurModule } from './module/tuteur/tuteur.module';
     StagiaireModule,
     RemunerationModule,
     TuteurModule,
+    DocumentModule,
   ],
 })
 export class AppModule {}
