@@ -44,7 +44,7 @@ const StagesProvisoires = () => {
     }
 
     type DocumentType = {
-        id_document: number;
+        id: number;
         nom_doc: string;
         type_doc:string;
         format: string;
@@ -61,7 +61,10 @@ const StagesProvisoires = () => {
     const [tuteur, setTuteur] = useState<TuteurType | null>(null);
     const [stagiaire, setStagiaire] = useState<StagiaireType | null>(null);
     const [remuneration, setRemuneration] = useState<RemunerationType | null>(null);
-    const [document,setDocument] = useState<DocumentType[]>([]);
+    const [document, setDocument] = useState<DocumentType[]>([]);
+
+    // État pour gérer le PDF affiché dans l'iframe
+    const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
     const { id } = useParams();
 
@@ -122,38 +125,73 @@ const StagesProvisoires = () => {
                     });
                     const contentRemuneration = await reponseApiRemuneration.json();
                     setRemuneration(contentRemuneration.remuneration);
+                }
 
                 if(contentStage.stage){
-                    const reponseApiDocument = await fetch (`http://127.0.0.1:3000/api/document/stage/${contentStage.stage.id}`,{
-                        method: "GET",
-                        headers:{
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`
+                    console.log("ICI");
+                    try{
+                        const reponseApiDocument = await fetch (`http://127.0.0.1:3000/api/document/stage/${contentStage.stage.id}`,{
+                            method: "GET",
+                            headers:{
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${token}`
+                            }
+
+                        });
+                        console.log("ICI1");
+
+                        const contentDocument = await reponseApiDocument.json();
+                        setDocument(contentDocument.document);
+
+                        console.log("ICI2", contentDocument.document);
+
+                        console.log(contentDocument.document[0].chemin_stockage);
+                        if (contentDocument.document && contentDocument.document.length > 0) {
+                            setSelectedPdf(contentDocument.document[0].chemin_stockage);
                         }
 
-                    });
-                    const contentDocument = await reponseApiDocument.json();
-                    setDocument(contentDocument.document);
 
-                }
-
-
+                    } catch(error){
+                        console.log(error);
+                    }
 
 
 
                 }
-
 
             } catch (err) {
                 console.error("Erreur fetching:", err);
             }
         }
-        fetching();
+         fetching();
     },[id]);
+
+    // Fonction pour transformer le chemin absolu en URL relative de document
+    const getPdfUrl = (path: string) => {
+        // On récupère juste le nom du fichier (ex: ficheContact.pdf)
+        const fileName = path.split('/').pop();
+        // On construit l'URL pointant vers le dossier statique de ton API
+        return `http://127.0.0.1:3000/document/${fileName}`;
+    };
+
 
     return (
         <>
+            <div className={styles.pdfViewerContainer}>
+                {selectedPdf}
+                {selectedPdf ? (
+                    console.log(selectedPdf),
+                    <iframe
+                        src={"/document/ficheContact.pdf"}
+                        title="Visualiser le PDF"
+                    />
+                ) : (
+                    <p className={styles.noPdf}>Aucun document sélectionné</p>
+                )}
+            </div>
+
+
             <button className={styles.retour} onClick={() => navigate(-1)}>← Retour</button>
 
             {stage && (
@@ -186,11 +224,20 @@ const StagesProvisoires = () => {
                             <span className={styles.valeur}>{stage.developpement_competences}</span>
                         </div>
 
-                        {document.map((doc) => (
-                            <div key={doc.id_document} className={styles.champ}>
-                                <span>{doc.chemin_stockage}</span>
-                            </div>
-                        ))}
+                        {/* Liste des documents cliquables pour changer le PDF de l'iframe */}
+                        <div className={styles.documentSection}>
+                            <p className={styles.label}>Documents disponibles :</p>
+                            {document.map((doc) => (
+                                <div key={doc.id} className={styles.documentItem}>
+                                    <button
+                                        onClick={() => setSelectedPdf(doc.chemin_stockage)}
+                                        className={styles.pdfSelectButton}
+                                    >
+                                        📄 Voir : {doc.nom_doc || doc.chemin_stockage.split('/').pop()}
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
 
                         <hr className={styles.separateur}/>
 
