@@ -31,6 +31,7 @@ export class DocumentService {
     }
 
     async findByIdStage(id_stage: number) {
+
         const idStages = await this.documentRepositoryCrud.findByIdStage(id_stage);
 
         if (idStages===null || idStages.length===0) {

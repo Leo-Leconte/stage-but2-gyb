@@ -34,7 +34,8 @@ export class DocumentRepositoryCrud {
     }
 
     async findByIdStage(id_stage: number) {
-        return this.document.find({ where: { id_stage } });
+
+        return await this.document.find({ where: { id_stage } });
     }
 
 
