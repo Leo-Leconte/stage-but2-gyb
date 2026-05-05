@@ -35,6 +35,11 @@ type StagiaireType = {
   telephone: string;
 };
 
+const formatDate = (date: string): string => {
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+};
+
 const ListeStages = () => {
   const [stages, setStages] = useState<StageType[]>([]);
   const [message, setMessage] = useState("");
@@ -168,10 +173,10 @@ const ListeStages = () => {
                     : `ID ${stage.id_tuteur} introuvable`}
                 </p>
                 <p>
-                  <strong>Début :</strong> {stage.date_debut}
+                  <strong>Début :</strong> {formatDate(stage.date_debut)}
                 </p>
                 <p>
-                  <strong>Fin :</strong> {stage.date_fin}
+                  <strong>Fin :</strong> {formatDate(stage.date_fin)}
                 </p>
               </div>
               <div className={styles.cardFooter}>
