@@ -96,6 +96,11 @@ type DocumentType = {
     id_collaborateur: number;
 };
 
+const formatDate = (date: string): string => {
+    const [year, month, day] = date.split("-");
+    return `${day}/${month}/${year}`;
+};
+
 /**
  * Composant qui affiche les détails d'un stage
  * en utilisant des fetchs pour accéder aux données de l'API
@@ -244,11 +249,11 @@ const StagesDetails = () => {
 
                         <div className={styles.champ}>
                             <span className={styles.label}>Date de début</span>
-                            <span className={styles.valeur}>{stage.date_debut}</span>
+                            <span className={styles.valeur}>{formatDate(stage.date_debut)}</span>
                         </div>
                         <div className={styles.champ}>
                             <span className={styles.label}>Date de fin</span>
-                            <span className={styles.valeur}>{stage.date_fin}</span>
+                            <span className={styles.valeur}>{formatDate(stage.date_fin)}</span>
                         </div>
                         <div className={styles.champ}>
                             <span className={styles.label}>Service d'accueil</span>
