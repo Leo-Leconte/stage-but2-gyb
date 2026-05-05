@@ -96,6 +96,10 @@ type DocumentType = {
     id_collaborateur: number;
 };
 
+/**
+ * fonction permettant de convertir la date en format "/"
+ * @param date ; la date à modifier
+ */
 const formatDate = (date: string): string => {
     const [year, month, day] = date.split("-");
     return `${day}/${month}/${year}`;
