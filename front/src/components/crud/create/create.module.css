@@ -154,7 +154,7 @@ select::picker(select) {
 }
 
 .error {
-    margin-top: 1px;
+    margin-top: 10px;
     margin-bottom: 14px;
     padding: 10px 16px;
     border-radius: 8px;
@@ -166,7 +166,7 @@ select::picker(select) {
     color: #eb4660;
 }
 .success {
-    margin-top: 1px;
+    margin-top: 10px;
     margin-bottom: 14px;
     padding: 10px 16px;
     border-radius: 8px;
