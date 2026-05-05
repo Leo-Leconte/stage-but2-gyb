@@ -85,7 +85,7 @@ function UpdateStage() {
     // Vérifie le numéro de telephone
     if (telRegex.test(form.telephone) === false && form.telephone !== "") {
       setErrors({
-        err: "Le numero de telephone doit etre de 10 chiffres",
+        err: "Le numéro de telephone doit être de 10 chiffres",
       });
       return;
     }
@@ -93,7 +93,7 @@ function UpdateStage() {
     // Vérifie l'email
     if (emailRegex.test(form.email) === false && form.email !== "") {
       setErrors({
-        err: "L'email doit etre valide",
+        err: "L'email doit être valide",
       });
       return;
     }
@@ -109,7 +109,7 @@ function UpdateStage() {
     // Vérifie que si une des 2 dates et remplit l'autre doit l'être aussi
     if (form.date_fin === "" && form.date_debut !== "") {
       setErrors({
-        err: "La date de fin doit etre remplie si la date de debut est remplie",
+        err: "La date de fin doit être remplie si la date de début est remplie",
       });
       return;
     }
@@ -121,7 +121,31 @@ function UpdateStage() {
       form.date_fin <= form.date_debut
     ) {
       setErrors({
-        err: "La date de fin ne peut pas etre inferieure a la date de debut",
+        err: "La date de fin ne peut pas être inférieure a la date de début",
+      });
+      return;
+    }
+
+    // s'il met faux, mais qu'il une valeur supérieure a 0 alors une erreur
+    if (form.est_remunere === "false" && form.montant_remunere !== "0") {
+      setErrors({
+        err: "Le stagiaire n'est pas remunere",
+      });
+      return;
+    }
+
+    // s'il met vrai, mais n'a pas rempli le montant de la rémuneration alors, on affiche un message d'erreur et on ne peut pas enregistrer
+    if (form.est_remunere === "true" && form.montant_remunere === "0") {
+      setErrors({
+        err: "Le stagiaire est rémunéré, veuillez remplir le montant de la rémunération",
+      });
+      return;
+    }
+
+    // s'il met vrai et n'a pas rempli le montant alors, on affiche un message d'erreur
+    if (form.est_remunere == "true" && form.montant_remunere === "") {
+      setErrors({
+        err: "Il faut remplir le montant de la rémuneration",
       });
       return;
     }
