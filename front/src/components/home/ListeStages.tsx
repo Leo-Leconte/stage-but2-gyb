@@ -35,11 +35,19 @@ type StagiaireType = {
   telephone: string;
 };
 
+/**
+ * fonction permettant de convertir la date en format "/"
+ * @param date ; la date à modifier
+ */
 const formatDate = (date: string): string => {
   const [year, month, day] = date.split("-");
   return `${day}/${month}/${year}`;
 };
 
+/**
+ * Composant qui affiche la liste de tous les stages
+ * avec une preview globale des infos
+ */
 const ListeStages = () => {
   const [stages, setStages] = useState<StageType[]>([]);
   const [message, setMessage] = useState("");
